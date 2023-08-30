@@ -8,10 +8,19 @@
     <VideoPlayer :videoID="currentLesson.videoId" />
 
     <p>{{ currentLesson.text }}</p>
+    <ClientOnly>
+      <CompleteLessonButton
+        :modelValue="LessonComplete"
+        @update:modelValue="CheckLessonComplete"
+      />
+    </ClientOnly>
   </div>
 </template>
 
 <script setup>
+import { useLocalStorage } from "@vueuse/core";
+import CompleteLessonButton from "~/components/CompleteLessonButton.vue";
+
 const course = useCourse();
 const route = useRoute();
 
@@ -32,4 +41,33 @@ const currentLesson = computed(() => {
 useHead({
   title: `${currentLesson.value.title}`,
 });
+// const lessonValue = ref();
+
+const progress = useLocalStorage("progress", []);
+
+const LessonComplete = computed(() => {
+  if (!progress.value[currentChapter.value.number - 1]) {
+    return false;
+  }
+  if (
+    !progress.value[currentChapter.value.number - 1][
+      currentLesson.value.number - 1
+    ]
+  ) {
+    return false;
+  }
+
+  return progress.value[currentChapter.value.number - 1][
+    currentLesson.value.number - 1
+  ];
+});
+
+const CheckLessonComplete = () => {
+  if (!progress.value[currentChapter.value.number - 1]) {
+    progress.value[currentChapter.value.number - 1] = [];
+  }
+  progress.value[currentChapter.value.number - 1][
+    currentLesson.value.number - 1
+  ] = !LessonComplete.value;
+};
 </script>
