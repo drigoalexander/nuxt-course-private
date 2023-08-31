@@ -1,5 +1,9 @@
 <script setup>
+import { useLocalStorage } from "@vueuse/core";
 const course = useCourse();
+const newArray = course.chapters.map((subArray) =>
+  new Array(subArray.lessons.length).fill(0)
+);
 </script>
 
 <template>
@@ -66,8 +70,8 @@ const course = useCourse();
                   </div>
                   <ul class="w-full flex flex-col gap-3 list-disc">
                     <li
-                      v-for="(element, idx) in el.lessons"
-                      :key="idx"
+                      v-for="(element, index) in el.lessons"
+                      :key="index"
                       :class="{
                         'text-gray-400': element.path !== $route.fullPath,
                         'text-transparent': element.path === $route.fullPath,
