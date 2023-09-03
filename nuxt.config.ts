@@ -1,8 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: true },
-  modules: ["@nuxtjs/tailwindcss", "@vueuse/nuxt", "@hypernym/nuxt-anime"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@vueuse/nuxt",
+    "@hypernym/nuxt-anime",
+    "@nuxtjs/supabase",
+  ],
   anime: {
     provide: true,
+  },
+  supabase: {
+    redirect: false,
   },
 });

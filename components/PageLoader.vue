@@ -1,40 +1,32 @@
 <template>
   <div
-    class="staggering-grid-demo relative h-1/2 title grid grid-cols-12 w-full gap-[1px]"
+    class="absolute staggering-grid-demo left-0 top-0 -z-10 h-[100vh] title grid grid-cols-[repeat(24,_minmax(0,_1fr))] w-full gap-4"
   >
     <div
-      @click="index = idx"
-      :id="idx"
-      class="rounded-md cursor-pointer hover:bg-green-800 el w-full aspect-square bg-green-500 transform"
-      v-for="(el, idx) in 48"
+      style="
+        border-radius: 10px;
+        background: #161616;
+        box-shadow: 20px 20px 60px #0c0c0c, -20px -20px 60px #202020;
+      "
+      class="shadow-neumor cursor-pointer el w-full aspect-square transform"
+      v-for="(el, idx) in 336"
     ></div>
   </div>
 </template>
 
 <script setup>
 const { $anime } = useNuxtApp();
-defineProps;
 
-$anime({
-  targets: "div .staggering-grid-demo .el",
-  scale: [
-    { value: 0.1, easing: "easeOutSine", duration: 500 },
-    { value: 1, easing: "easeInOutQuad", duration: 1000 },
-  ],
-  delay: $anime.stagger(200, { grid: [12, 4], from: index.value }),
-  loop: true,
-});
-
-watch(index, () => {
+onMounted(() => {
   $anime({
-    targets: ".staggering-grid-demo .el",
+    targets: "div .staggering-grid-demo .el",
     scale: [
       { value: 0.1, easing: "easeOutSine", duration: 500 },
       { value: 1, easing: "easeInOutQuad", duration: 1000 },
     ],
-    delay: $anime.stagger(200, { grid: [12, 4], from: index.value }),
+
+    delay: $anime.stagger(200, { grid: [24, 14], from: "center" }),
+    loop: true,
   });
 });
-
-defineEmits(["update:index"]);
 </script>

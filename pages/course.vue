@@ -1,9 +1,16 @@
 <script setup>
-import { useLocalStorage } from "@vueuse/core";
+definePageMeta({
+  middleware: ["auth"],
+});
+
 const course = useCourse();
-const newArray = course.chapters.map((subArray) =>
-  new Array(subArray.lessons.length).fill(0)
-);
+const user = useSupabaseUser();
+
+const supabase = useSupabaseClient();
+function signOut() {
+  const { error } = supabase.auth.signOut();
+  if (error) console.log(error);
+}
 </script>
 
 <template>
@@ -92,6 +99,10 @@ const newArray = course.chapters.map((subArray) =>
             </section>
             <div class="divider my-0"></div>
           </nav>
+        </section>
+        <section class="sidebar-footer h-full justify-end bg-gray-2 pt-2">
+          <div class="divider my-0"></div>
+          <UserCard />
         </section>
       </aside>
     </div>
