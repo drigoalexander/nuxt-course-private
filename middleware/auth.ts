@@ -1,8 +1,8 @@
-export default defineNuxtRouteMiddleware((from, to) => {
+export default defineNuxtRouteMiddleware((to, from) => {
   const user = useSupabaseUser();
-  console.log(user);
-  if (!user.value) {
-    return navigateTo("/login");
+
+  if (user.value || to.params.chapterSession == "1-chapter-1") {
+    return;
   }
-  return;
+  return navigateTo(`/login?redirectTo=${to.path}`);
 });

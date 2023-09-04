@@ -22,51 +22,21 @@ import { useLocalStorage } from "@vueuse/core";
 import CompleteLessonButton from "~/components/CompleteLessonButton.vue";
 
 definePageMeta({
-  middleware: [
-    function (route) {
-      const course = useCourse();
-      const currentChapter = computed(() => {
-        return course.chapters.find(
-          (element) => element.slug === route.params.chapterSession
-        );
-      });
-
-      if (!currentChapter.value) {
-        return createError({
-          statusCode: 404,
-          message: "Chapter not found!",
-        });
-      }
-      const currentLesson = computed(() => {
-        return currentChapter.value.lessons.find(
-          (element) => element.slug === route.params.lessonSlug
-        );
-      });
-
-      if (!currentLesson.value) {
-        return createError({
-          statusCode: 404,
-          message: "Lesson not found!",
-        });
-      }
-
-      return true;
-    },
-  ],
+  middleware: ["auth"],
 });
 
 const course = useCourse();
-const route = useRoute();
 
+const route = useRoute();
 const currentChapter = computed(() => {
   return course.chapters.find(
-    (element) => element.slug === route.params.chapterSession
+    (element) => element.slug == route.params.chapterSession
   );
 });
 
 const currentLesson = computed(() => {
   return currentChapter.value.lessons.find(
-    (element) => element.slug === route.params.lessonSlug
+    (element) => element.slug == route.params.lessonSlug
   );
 });
 

@@ -12,8 +12,7 @@ const avatar = computed(() => {
 
 const signOut = async () => {
   const { error } = await supabase.auth.signOut();
-  console.log(error);
-  await navigateTo("/login");
+  await navigateTo("/");
 };
 </script>
 

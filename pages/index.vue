@@ -43,18 +43,8 @@ const user = useSupabaseUser();
                   class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start"
                 >
                   <NuxtLink
-                    v-if="user"
-                    to="/course"
-                    class="before:bg-primary astro-Z4ZYBUMP"
-                    ><span class="text-white astro-Z4ZYBUMP">
-                      Go to courses
-                    </span></NuxtLink
-                  >
-
-                  <NuxtLink
-                    v-else
-                    to="/login"
-                    class="before:bg-primary astro-Z4ZYBUMP"
+                    @click="navigateTo('/course')"
+                    class="cursor-pointer before:bg-primary astro-Z4ZYBUMP"
                     ><span class="text-white astro-Z4ZYBUMP">
                       Get Started
                     </span></NuxtLink

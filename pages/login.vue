@@ -2,7 +2,7 @@
   <div class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <h2
-        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-green-500"
+        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-jetPink"
       >
         Sign in to your account
       </h2>
@@ -36,9 +36,7 @@
               >Password</label
             >
             <div class="text-sm">
-              <a
-                href="#"
-                class="font-semibold text-green-600 hover:text-green-500"
+              <a href="#" class="font-semibold text-jetPink"
                 >Forgot password?</a
               >
             </div>
@@ -58,7 +56,7 @@
         <div>
           <button
             type="submit"
-            class="flex w-full justify-center rounded-md bg-green-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-green-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green-600"
+            class="flex w-full justify-center rounded-md bg-jetPink px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Sign in
           </button>
@@ -91,11 +89,22 @@
 <script setup>
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
-console.log(user);
-const signInWithOAuth = async () => {
-  const { error } = await supabase.auth.signInWithOAuth({
+const { query } = useRoute();
+
+watchEffect(async () => {
+  if (user.value) {
+    await navigateTo(query.redirectTo ?? "/", {
+      replace: true,
+    });
+  }
+});
+
+const signInWithOAuth = () => {
+  supabase.auth.signInWithOAuth({
     provider: "github",
+    options: {
+      redirectTo: query.redirectTo ?? "/",
+    },
   });
-  if (error) console.log(error);
 };
 </script>
