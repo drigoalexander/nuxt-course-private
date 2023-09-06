@@ -6,12 +6,13 @@ datasource db {
 generator client {
     provider      = "prisma-client-js"
     binaryTargets = ["native", "darwin-arm64"]
+    output        = "../node_modules/.prisma/client"
 }
 
 model Course {
     id        String    @id @default(uuid())
     title     String
-    Chapter   Chapter[]
+    chapters  Chapter[]
     createdAt DateTime  @default(now())
     updatedAt DateTime  @updatedAt
 }
@@ -21,24 +22,24 @@ model Chapter {
     title     String
     slug      String
     number    Int
+    lessons   Lesson[]
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    lessons   Lesson[]
-    Course    Course?  @relation(fields: [courseId], references: [id])
-    courseId  String?
+    Course    Course   @relation(fields: [courseId], references: [id])
+    courseId  String
 }
 
 model Lesson {
     id          String   @id @default(uuid())
     title       String
     slug        String
-    number      String
+    number      Int
     downloadUrl String
-    sourceUrl   String?
     videoId     Int
     text        String
+    sourceUrl   String?
     createdAt   DateTime @default(now())
     updatedAt   DateTime @updatedAt
-    Chapter     Chapter? @relation(fields: [chapterId], references: [id])
-    chapterId   String?
+    Chapter     Chapter  @relation(fields: [chapterId], references: [id])
+    chapterId   String
 }
