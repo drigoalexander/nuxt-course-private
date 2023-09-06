@@ -12,13 +12,12 @@
         Return To Course
       </button>
     </template>
+
     <PageLoader />
   </div>
 </template>
 
 <script setup>
-const { $anime } = useNuxtApp();
-
 const error = useError();
 
 function errorClear() {

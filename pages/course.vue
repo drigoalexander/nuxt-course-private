@@ -1,7 +1,7 @@
 <script setup>
-const course = useCourse();
 const route = useRoute();
 const user = useSupabaseUser();
+const course = await useCourse();
 </script>
 
 <template>
@@ -14,7 +14,7 @@ const user = useSupabaseUser();
       >
         <section class="sidebar-title items-center p-4">
           <div class="flex flex-col">
-            <span class="text-4xl">NuxtInsight</span>
+            <NuxtLink to="/" class="text-4xl">NuxtInsight</NuxtLink>
           </div>
         </section>
         <section class="sidebar-content">
@@ -25,7 +25,7 @@ const user = useSupabaseUser();
               <ul class="menu-items gap-8">
                 <li
                   class="menu-item flex flex-col items-start gap-3"
-                  v-for="(el, idx) in course.chapters"
+                  v-for="(el, idx) in course.data.chapters"
                   :key="idx"
                 >
                   <div class="flex items-center gap-2">
@@ -93,7 +93,7 @@ const user = useSupabaseUser();
         >
           <template v-if="user">
             <NuxtPage v-if="route.fullPath !== '/course'" />
-            <span v-else>{{ course.title }}</span>
+            <span v-else>{{ course.data.title }}</span>
           </template>
           <LoginCard v-else />
         </div>

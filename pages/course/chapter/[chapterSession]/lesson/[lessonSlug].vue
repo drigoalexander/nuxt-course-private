@@ -1,13 +1,13 @@
 <template>
   <div class="w-3/4 mx-auto h-3/4 my-auto gap-6 flex flex-col">
     <h4 class="text-xl font-semibold">
-      {{ route.params.chapterSession }} - Lesson {{ currentLesson.number }}
+      Chapter {{ currentChapter.number }} - Lesson {{ lesson.data.number }}
     </h4>
-    <h1 class="text-4xl font-bold">{{ currentLesson.title }}</h1>
+    <h1 class="text-4xl font-bold">{{ lesson.data.title }}</h1>
 
-    <VideoPlayer :videoID="currentLesson.videoId" />
+    <VideoPlayer :videoID="lesson.data.videoId" />
 
-    <p>{{ currentLesson.text }}</p>
+    <p>{{ lesson.data.text }}</p>
     <ClientOnly>
       <CompleteLessonButton
         :modelValue="LessonComplete"
@@ -25,11 +25,15 @@ definePageMeta({
   middleware: ["auth"],
 });
 
-const course = useCourse();
-
+const course = await useCourse();
 const route = useRoute();
+const lesson = await useLesson(
+  route.params.chapterSession,
+  route.params.lessonSlug
+);
+
 const currentChapter = computed(() => {
-  return course.chapters.find(
+  return course.value.data.chapters.find(
     (element) => element.slug == route.params.chapterSession
   );
 });
