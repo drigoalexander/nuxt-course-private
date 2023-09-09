@@ -1,11 +1,16 @@
 // import course from "~/server/courseData.js";
 import { PrismaClient } from "@prisma/client";
-import { Lessons, Chapters, Course, LessonsWithPath } from "~/types/course";
+import protectRoute from "~/server/utils/protectRoute";
+// import { Lessons, Chapters, Course, LessonsWithPath } from "~/types/course";
 
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const { chapterSession, lessonSlug } = event.context.params;
+
+  if (chapterSession !== "1-chapter-1") {
+    protectRoute(event);
+  }
 
   const lesson = await prisma.lesson.findFirst({
     where: {
@@ -39,6 +44,6 @@ export default defineEventHandler(async (event) => {
 
   return {
     ...lesson,
-    path: `course/chapters/${chapterSession}/lessons/${lessonSlug}`,
+    path: `course/chapter/${chapterSession}/lesson/${lessonSlug}`,
   };
 });

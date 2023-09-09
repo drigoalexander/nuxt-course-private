@@ -1,6 +1,4 @@
-<script setup>
-const user = useSupabaseUser();
-</script>
+<script setup></script>
 
 <template>
   <main class="mb-40">
