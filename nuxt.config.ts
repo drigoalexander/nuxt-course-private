@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     "@hypernym/nuxt-anime",
     "@nuxtjs/supabase",
   ],
+
   anime: {
     provide: true,
   },
