@@ -2,22 +2,6 @@
   <div
     class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 text-white mx-auto relative"
   >
-    <div
-      class="w-screen h-screen wrapper absolute z-0 top-0 left-0 bg-gradient-to-r from-jetYellow to-jetFuchsia via-jetPink"
-      style="
-         {
-          grid-template-columns: repeat(var(--col), 1fr);
-          grid-template-rows: repeat(var(--row), 1fr);
-        }
-      "
-    >
-      <div
-        class="aspect-square w-[50px] bg-stone-950 tiles before:inset-4 before:content-[''] before:absolute"
-        v-for="el in ComputedColumns * ComputedRows"
-        :key="el"
-      ></div>
-    </div>
-
     <div class="sm:mx-auto sm:w-full sm:max-w-sm relative z-20">
       <h2
         class="mt-10 text-center text-2xl font-bold leading-9 z-20 tracking-tight text-jetPink"
@@ -125,39 +109,6 @@ const signInWithOAuth = () => {
     },
   });
 };
-
-const columns = ref(1);
-const rows = ref(1);
-const widthRec = ref(50);
-const heightRec = ref(50);
-
-onMounted(() => {
-  columns.value = Math.floor(document.body.clientWidth / widthRec.value);
-  rows.value = Math.floor(document.body.clientHeight / heightRec.value);
-
-  window.addEventListener("resize", () => {
-    columns.value = Math.floor(document.body.clientWidth / widthRec.value);
-    rows.value = Math.floor(document.body.clientHeight / heightRec.value);
-  });
-});
-
-const ComputedColumns = computed(() => {
-  return columns.value;
-});
-
-const ComputedRows = computed(() => {
-  return rows.value;
-});
-
-const Total = computed(() => {
-  return columns.value * rows.value;
-});
 </script>
 
-<style>
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(v-bind(ComputedColumns), 1fr);
-  grid-template-rows: repeat(v-bind(ComputedRows), 1fr);
-}
-</style>
+<style></style>
