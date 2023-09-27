@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 export default defineEventHandler(async (event) => {
   const { chapterSession, lessonSlug } = event.context.params;
 
-  // if (chapterSession !== "1-chapter-1") {
-  //   protectRoute(event);
-  // }
+  if (chapterSession !== "1-chapter-1") {
+    protectRoute(event);
+  }
 
   const lesson = await prisma.lesson.findFirst({
     where: {

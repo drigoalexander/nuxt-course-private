@@ -2,27 +2,66 @@
 import { RocketLaunchIcon, ChartBarIcon } from "@heroicons/vue/24/outline";
 const { $anime } = useNuxtApp();
 
+const columns = ref(1);
+const rows = ref(1);
+const widthRec = ref(50);
+const heightRec = ref(50);
+const themes = ref(["#FCF84A", "#FE2857", "#AF1DF5", "#171717"]);
+let themeIdx = ref(0);
+
 onMounted(() => {
-  $anime({
-    targets: ".chart path",
-    strokeDashoffset: [$anime.setDashoffset, 0],
-    fill: "#FCF84A",
-    easing: "easeInOutSine",
-    duration: 6000,
-    delay: function (el, i) {
-      return i * 250;
-    },
-    direction: "linear",
-    loop: false,
-    complete: () => {
-      console.log("show the rest of the webpage");
-    },
+  columns.value = Math.floor(document.body.clientWidth / widthRec.value);
+  rows.value = Math.floor(document.body.clientHeight / heightRec.value);
+
+  window.addEventListener("resize", () => {
+    columns.value = Math.floor(document.body.clientWidth / widthRec.value);
+    rows.value = Math.floor(document.body.clientHeight / heightRec.value);
   });
 });
+
+const ComputedColumns = computed(() => {
+  return columns.value;
+});
+
+const ComputedRows = computed(() => {
+  return rows.value;
+});
+
+function animate(idx) {
+  themeIdx.value++;
+  console.log(idx);
+  if (themeIdx.value === 4) {
+    themeIdx.value = 0;
+  }
+  $anime({
+    targets: ".tiles",
+    backgroundColor: themes.value[themeIdx.value],
+    delay: $anime.stagger(30, {
+      grid: [columns.value, rows.value],
+      from: idx,
+    }),
+  });
+}
 </script>
 
 <template>
   <main class="mb-40">
+    <div
+      class="w-screen h-screen wrapper fixed -z-10 top-0 left-0 gap-0"
+      style="
+         {
+          grid-template-columns: repeat(var(--col), 1fr);
+          grid-template-rows: repeat(var(--row), 1fr);
+        }
+      "
+    >
+      <div
+        class="aspect-square w-[55px] tiles"
+        v-for="(el, idx) in ComputedColumns * ComputedRows"
+        @click="animate(idx)"
+        :key="el"
+      ></div>
+    </div>
     <div
       class="relative overflow-hidden dark:bg-darker lg:overflow-auto"
       id="home"
@@ -412,3 +451,11 @@ onMounted(() => {
     </div>
   </main>
 </template>
+
+<style scoped>
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(v-bind(ComputedColumns), 1fr);
+  grid-template-rows: repeat(v-bind(ComputedRows), 1fr);
+}
+</style>
