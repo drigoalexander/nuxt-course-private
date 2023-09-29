@@ -1,5 +1,5 @@
 <script setup>
-import { RocketLaunchIcon, ChartBarIcon } from "@heroicons/vue/24/outline";
+// import { RocketLaunchIcon, ChartBarIcon } from "@heroicons/vue/24/outline";
 const { $anime } = useNuxtApp();
 
 const columns = ref(1);
@@ -374,7 +374,7 @@ function animate(idx) {
           class="flex-row-reverse items-center justify-between space-y-12 text-gray-600 md:flex md:gap-6 lg:gap-12 lg:space-y-0"
         >
           <div class="relative ml-auto h-full md:w-1/2 chart test">
-            <ChartBarIcon class="fill-white stroke-transparent" />
+            <!-- <ChartBarIcon class="fill-white stroke-transparent" /> -->
           </div>
 
           <div class="md:w-1/2 lg:w-[47%]">
@@ -429,9 +429,9 @@ function animate(idx) {
                 <div
                   class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900"
                 >
-                  <RocketLaunchIcon
+                  <!-- <RocketLaunchIcon
                     class="w-2/3 mx-auto stroke-1 stroke-gray-200"
-                  />
+                  /> -->
                 </div>
                 <div class="w-5/6">
                   <h3
