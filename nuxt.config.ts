@@ -8,7 +8,9 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxtjs/color-mode",
   ],
-
+  build: {
+    transpile: ["gsap"],
+  },
   anime: {
     provide: true,
   },
