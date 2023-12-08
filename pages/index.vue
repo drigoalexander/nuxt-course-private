@@ -8,6 +8,7 @@ const widthRec = ref(50);
 const heightRec = ref(50);
 const themes = ref(["#FCF84A", "#FE2857", "#AF1DF5", "#171717"]);
 let themeIdx = ref(0);
+const colorMode = useColorMode;
 
 onMounted(() => {
   columns.value = Math.floor(document.body.clientWidth / widthRec.value);
@@ -29,7 +30,6 @@ const ComputedRows = computed(() => {
 
 function animate(idx) {
   themeIdx.value++;
-  console.log(idx);
   if (themeIdx.value === 4) {
     themeIdx.value = 0;
   }
@@ -42,28 +42,40 @@ function animate(idx) {
     }),
   });
 }
+
+function test() {
+  console.log("asd");
+}
 </script>
 
 <template>
-  <main class="mb-40">
+  <div class="sr-only" @keydown.enter="test">
+    <select v-model="$colorMode.preference">
+      <option value="dark"></option>
+      <option value="light"></option>
+      <option value="neon"></option>
+      <option value="magenta"></option>
+    </select>
+  </div>
+  <div
+    class="w-screen h-screen wrapper fixed z-0 top-0 left-0 gap-0"
+    style="
+       {
+        grid-template-columns: repeat(var(--col), 1fr);
+        grid-template-rows: repeat(var(--row), 1fr);
+      }
+    "
+  >
     <div
-      class="w-screen h-screen wrapper fixed -z-10 top-0 left-0 gap-0"
-      style="
-         {
-          grid-template-columns: repeat(var(--col), 1fr);
-          grid-template-rows: repeat(var(--row), 1fr);
-        }
-      "
-    >
-      <div
-        class="aspect-square w-[55px] tiles"
-        v-for="(el, idx) in ComputedColumns * ComputedRows"
-        @click="animate(idx)"
-        :key="el"
-      ></div>
-    </div>
+      class="aspect-square w-[55px] tiles"
+      v-for="(el, idx) in ComputedColumns * ComputedRows"
+      @click="animate(idx)"
+      :key="el"
+    ></div>
+  </div>
+  <main class="pointer-events-none mb-40 z-10 relative">
     <div
-      class="relative overflow-hidden dark:bg-darker lg:overflow-auto"
+      class="poi relative overflow-hidden dark:bg-darker lg:overflow-auto"
       id="home"
     >
       <div class="absolute inset-x-0 top-32 lg:hidden">
@@ -102,7 +114,7 @@ function animate(idx) {
                 >
                   <NuxtLink
                     @click="navigateTo('/course')"
-                    class="cursor-pointer before:bg-primary astro-Z4ZYBUMP"
+                    class="pointer-events-auto cursor-pointer before:bg-primary astro-Z4ZYBUMP"
                     ><span class="text-white astro-Z4ZYBUMP">
                       Get Started
                     </span></NuxtLink

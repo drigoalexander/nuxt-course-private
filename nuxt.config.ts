@@ -6,6 +6,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@hypernym/nuxt-anime",
     "@nuxtjs/supabase",
+    "@nuxtjs/color-mode",
   ],
 
   anime: {

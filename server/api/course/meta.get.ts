@@ -1,10 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import {
-  ChapterMeta,
-  LessonsMetaWithPath,
-  Course,
-  CourseMeta,
-} from "~/types/course";
 
 const prisma = new PrismaClient();
 

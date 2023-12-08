@@ -1,8 +1,6 @@
 <template>
-  <NuxtLayout>
-    <!-- <PageLoader v-if="loading" /> -->
-    <LazyNuxtPage />
-  </NuxtLayout>
+  <!-- <PageLoader v-if="loading" /> -->
+  <LazyNuxtPage />
 </template>
 
 <script setup lang="ts">

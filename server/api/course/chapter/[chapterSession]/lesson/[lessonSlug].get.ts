@@ -1,6 +1,6 @@
 // import course from "~/server/courseData.js";
 import { PrismaClient } from "@prisma/client";
-import protectRoute from "~/server/utils/protectRoute";
+
 // import { Lessons, Chapters, Course, LessonsWithPath } from "~/types/course";
 
 const prisma = new PrismaClient();
