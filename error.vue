@@ -13,7 +13,7 @@
       </button>
     </template>
 
-    <PageLoader />
+    <!-- <PageLoader /> -->
   </div>
 </template>
 

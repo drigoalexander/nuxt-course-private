@@ -93,22 +93,12 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { query } = useRoute();
 
-watchEffect(async () => {
-  if (user.value) {
-    await navigateTo(query.redirectTo ?? "/", {
-      replace: true,
-    });
-  }
-});
-
 const signInWithOAuth = () => {
   supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: query.redirectTo ?? "/",
+      redirectTo: "http://localhost:3000/" + query.redirectTo,
     },
   });
 };
 </script>
-
-<style></style>

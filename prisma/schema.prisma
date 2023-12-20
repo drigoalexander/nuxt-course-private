@@ -30,16 +30,29 @@ model Chapter {
 }
 
 model Lesson {
-    id          String   @id @default(uuid())
-    title       String
-    slug        String
-    number      Int
-    downloadUrl String
-    videoId     Int
-    text        String
-    sourceUrl   String?
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
-    Chapter     Chapter  @relation(fields: [chapterId], references: [id])
-    chapterId   String
+    id             String           @id @default(uuid())
+    title          String
+    slug           String
+    number         Int
+    downloadUrl    String
+    videoId        Int
+    text           String
+    sourceUrl      String?
+    createdAt      DateTime         @default(now())
+    updatedAt      DateTime         @updatedAt
+    Chapter        Chapter          @relation(fields: [chapterId], references: [id])
+    chapterId      String
+    LessonProgress LessonProgress[]
+}
+
+model LessonProgress {
+    id        Int      @id @default(autoincrement())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+    progress  Boolean  @default(false)
+    userEmail String
+    lessonId  String
+    Lesson    Lesson   @relation(fields: [lessonId], references: [id])
+
+    @@unique([lessonId, userEmail])
 }
