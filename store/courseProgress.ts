@@ -1,38 +1,49 @@
 import { defineStore } from "pinia";
 
-export const courseProgress = defineStore("courseProgress", () => {
-  const progress = useLocalStorage<{
-    [key: string]: { [key: string]: boolean };
-  }>("progress", {});
+export const useCourseProgress = defineStore("courseProgress", () => {
+  const user = useSupabaseUser();
+  const progress = ref<any>({});
   const initialized = ref(false);
 
-  function initializer() {
+  async function initialize() {
     if (initialized.value) return;
     initialized.value = true;
   }
-
   const toggleComplete = async (chapter: string, lesson: string) => {
     const user = useSupabaseUser();
     if (!user.value) return;
-
     if (!chapter || !lesson) {
       const {
-        params: { chapterSlug, lessonSlug },
+        params: { chapterSession, lessonSlug },
       } = useRoute();
-      chapter = chapterSlug as string;
+      chapter = chapterSession as string;
       lesson = lessonSlug as string;
     }
-
     const currentProgress = progress.value[chapter]?.[lesson];
     progress.value[chapter] = {
-      ...(progress.value[chapter] ?? {}),
+      ...progress.value[chapter],
       [lesson]: !currentProgress,
     };
+    try {
+      await $fetch(`/api/course/chapter/${chapter}/lesson/${lesson}/progress`, {
+        method: "POST",
+        body: {
+          completed: !currentProgress,
+          userEmail: user.value.email,
+        },
+      });
+    } catch (error) {
+      console.error(error);
+      progress.value[chapter] = {
+        ...progress.value[chapter],
+        [lesson]: currentProgress,
+      };
+    }
+  };
 
-    return {
-      initializer,
-      progress,
-      toggleComplete,
-    };
+  return {
+    initialize,
+    progress,
+    toggleComplete,
   };
 });

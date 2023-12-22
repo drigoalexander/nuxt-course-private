@@ -1,97 +1,46 @@
 <template>
   <div
-    class="flex min-h-screen flex-col justify-center px-6 py-12 lg:px-8 text-white mx-auto relative"
+    class="flex flex-col gap-10 items-center justify-center min-h-screen w-full bg-black"
   >
-    <div class="sm:mx-auto sm:w-full sm:max-w-sm relative z-20">
-      <h2
-        class="mt-10 text-center text-2xl font-bold leading-9 z-20 tracking-tight text-jetPink"
+    <h3 class="text-white text-[5vw] -tracking-tight">Welcome,</h3>
+    <div
+      @click="signInWithOAuth"
+      class="overflow-hidden bg-gradient-to-r from-[#1CD8D2] to-[#93EDC7] relative flex items-center gap-10 text-[7vw] duration-300 transition-all ease-in-out w-[60vw] cursor-pointer hover:w-[64vw] group rounded-full text-white"
+    >
+      <div
+        class="flex h-full w-full items-center justify-center bg-black px-24 py-4 m-[4px] rounded-full"
       >
-        Sign in to your account
-      </h2>
-    </div>
-
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-4">
-      <form class="space-y-6" action="#" method="POST">
-        <div>
-          <label
-            for="email"
-            class="block text-sm font-medium leading-6 text-gray-900"
-            >Email address</label
-          >
-          <div class="mt-2">
-            <input
-              id="email"
-              name="email"
-              type="email"
-              autocomplete="email"
-              required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
-
-        <div>
-          <div class="flex items-center justify-between">
-            <label
-              for="password"
-              class="block text-sm font-medium leading-6 text-gray-900"
-              >Password</label
-            >
-            <div class="text-sm">
-              <a href="#" class="font-semibold text-jetPink"
-                >Forgot password?</a
-              >
-            </div>
-          </div>
-          <div class="mt-2">
-            <input
-              id="password"
-              name="password"
-              type="password"
-              autocomplete="current-password"
-              required
-              class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-green-600 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
-
-        <div>
-          <button
-            type="submit"
-            class="flex w-full justify-center rounded-md bg-jetPink px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-          >
-            Sign in
-          </button>
-        </div>
-      </form>
-
-      <button
-        type="button"
-        @click="signInWithOAuth"
-        class="py-2 px-4 max-w-md flex justify-center items-center bg-gray-600 hover:bg-gray-700 focus:ring-gray-500 focus:ring-offset-gray-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg"
-      >
+        <span class="text-white text-transparent bg-clip-text w-full">
+          Git It Started</span
+        >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          fill="currentColor"
-          class="mr-2"
-          viewBox="0 0 1792 1792"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-[7vw] absolute right-10 translate-y-[150%] group-hover:translate-y-0 opacity-0 group-hover:opacity-100 duration-200 ease-in-out"
         >
           <path
-            d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"
-          ></path>
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m4.5 15.75 7.5-7.5 7.5 7.5"
+          />
         </svg>
-        Sign in with GitHub
-      </button>
+      </div>
     </div>
   </div>
+  <div class=""></div>
 </template>
 
 <script setup>
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { query } = useRoute();
+
+definePageMeta({
+  middleware: "logged",
+});
 
 const signInWithOAuth = () => {
   supabase.auth.signInWithOAuth({

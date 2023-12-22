@@ -10,69 +10,50 @@
     <p>{{ lesson.data.text }}</p>
     <ClientOnly>
       <CompleteLessonButton
-        :modelValue="LessonComplete"
-        @update:modelValue="CheckLessonComplete"
+        :modelValue="isCompleted"
+        @update:modelValue="toggleComplete"
       />
     </ClientOnly>
   </div>
 </template>
 
 <script setup>
-import { useLocalStorage } from "@vueuse/core";
 import CompleteLessonButton from "~/components/CompleteLessonButton.vue";
+import { useCourseProgress } from "~/store/courseProgress";
+
+const store = useCourseProgress();
+const { initialize, toggleComplete } = store;
+
+const user = useSupabaseUser();
+
+console.log(user.value.email);
+initialize();
 
 definePageMeta({
   middleware: ["auth"],
 });
 
 const course = await useCourse();
-const route = useRoute();
-const lesson = await useLesson(
-  route.params.chapterSession,
-  route.params.lessonSlug
-);
+const { params } = useRoute();
+const lesson = await useLesson(params.chapterSession, params.lessonSlug);
 
 const currentChapter = computed(() => {
   return course.value.data.chapters.find(
-    (element) => element.slug == route.params.chapterSession
+    (element) => element.slug == params.chapterSession
   );
 });
 
 const currentLesson = computed(() => {
   return currentChapter.value.lessons.find(
-    (element) => element.slug == route.params.lessonSlug
+    (element) => element.slug == params.lessonSlug
   );
+});
+
+const isCompleted = computed(() => {
+  return store.progress?.[params.chapterSession]?.[params.lessonSlug] || false;
 });
 
 useHead({
   title: `${currentLesson.value.title}`,
 });
-
-const progress = useLocalStorage("progress", []);
-
-const LessonComplete = computed(() => {
-  if (!progress.value[currentChapter.value.number - 1]) {
-    return false;
-  }
-  if (
-    !progress.value[currentChapter.value.number - 1][
-      currentLesson.value.number - 1
-    ]
-  ) {
-    return false;
-  }
-
-  return progress.value[currentChapter.value.number - 1][
-    currentLesson.value.number - 1
-  ];
-});
-
-const CheckLessonComplete = () => {
-  if (!progress.value[currentChapter.value.number - 1]) {
-    progress.value[currentChapter.value.number - 1] = [];
-  }
-  progress.value[currentChapter.value.number - 1][
-    currentLesson.value.number - 1
-  ] = !LessonComplete.value;
-};
 </script>

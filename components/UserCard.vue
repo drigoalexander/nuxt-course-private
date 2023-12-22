@@ -3,11 +3,11 @@ const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 
 const name = computed(() => {
-  return user.value.user_metadata.full_name;
+  return user.value?.user_metadata.full_name;
 });
 
 const avatar = computed(() => {
-  return user.value.user_metadata.avatar_url;
+  return user.value?.user_metadata.avatar_url;
 });
 
 const signOut = async () => {
@@ -37,12 +37,6 @@ const signOut = async () => {
       </div>
     </label>
     <div class="dropdown-menu dropdown-menu-right-top ml-2">
-      <a class="dropdown-item text-sm">Profile</a>
-      <a tabindex="-1" class="dropdown-item text-sm">Account settings</a>
-      <a tabindex="-1" class="dropdown-item text-sm">Change email</a>
-      <a tabindex="-1" class="dropdown-item text-sm">Subscriptions</a>
-      <a tabindex="-1" class="dropdown-item text-sm">Change password</a>
-      <a tabindex="-1" class="dropdown-item text-sm">Refer a friend</a>
       <button @click="signOut" tabindex="-1" class="dropdown-item text-sm">
         Log out
       </button>

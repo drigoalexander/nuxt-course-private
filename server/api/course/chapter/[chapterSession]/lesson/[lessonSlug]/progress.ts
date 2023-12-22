@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
+import protectRoutes from "~/server/utils/protectRoutes";
 
 const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   assertMethod(event, ["PUT", "PATCH", "POST"]);
-
+  protectRoutes(event);
   const { chapterSlug, lessonSlug } = event.context.params;
   const lesson = await prisma.lesson.findFirst({
     where: {
@@ -27,7 +28,7 @@ export default defineEventHandler(async (event) => {
     where: {
       lessonId_userEmail: {
         lessonId: lesson.id,
-        userEmail,
+        userEmail: userEmail,
       },
     },
     update: {

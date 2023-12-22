@@ -7,6 +7,8 @@ export default defineNuxtConfig({
     "@hypernym/nuxt-anime",
     "@nuxtjs/supabase",
     "@nuxtjs/color-mode",
+    "@pinia/nuxt",
+    "@nuxtjs/google-fonts",
   ],
   build: {
     transpile: ["gsap"],
@@ -16,5 +18,10 @@ export default defineNuxtConfig({
   },
   supabase: {
     redirect: false,
+  },
+  googleFonts: {
+    families: {
+      Montserrat: true,
+    },
   },
 });
