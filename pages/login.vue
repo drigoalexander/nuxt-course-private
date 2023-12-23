@@ -43,7 +43,7 @@ const signInWithOAuth = () => {
   supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: url.hostname + query.redirectTo,
+      redirectTo: query.redirectTo,
     },
   });
 };
