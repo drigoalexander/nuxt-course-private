@@ -1,0 +1,216 @@
+{
+  "resolvedId": "/Users/drigoalexander/Documents/Practice/NUXT/nuxt-course/node_modules/@supabase/realtime-js/dist/module/lib/push.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "import { DEFAULT_TIMEOUT } from '../lib/constants';\nexport default class Push {\n    /**\n     * Initializes the Push\n     *\n     * @param channel The Channel\n     * @param event The event, for example `\"phx_join\"`\n     * @param payload The payload, for example `{user_id: 123}`\n     * @param timeout The push timeout in milliseconds\n     */\n    constructor(channel, event, payload = {}, timeout = DEFAULT_TIMEOUT) {\n        this.channel = channel;\n        this.event = event;\n        this.payload = payload;\n        this.timeout = timeout;\n        this.sent = false;\n        this.timeoutTimer = undefined;\n        this.ref = '';\n        this.receivedResp = null;\n        this.recHooks = [];\n        this.refEvent = null;\n    }\n    resend(timeout) {\n        this.timeout = timeout;\n        this._cancelRefEvent();\n        this.ref = '';\n        this.refEvent = null;\n        this.receivedResp = null;\n        this.sent = false;\n        this.send();\n    }\n    send() {\n        if (this._hasReceived('timeout')) {\n            return;\n        }\n        this.startTimeout();\n        this.sent = true;\n        this.channel.socket.push({\n            topic: this.channel.topic,\n            event: this.event,\n            payload: this.payload,\n            ref: this.ref,\n            join_ref: this.channel._joinRef(),\n        });\n    }\n    updatePayload(payload) {\n        this.payload = Object.assign(Object.assign({}, this.payload), payload);\n    }\n    receive(status, callback) {\n        var _a;\n        if (this._hasReceived(status)) {\n            callback((_a = this.receivedResp) === null || _a === void 0 ? void 0 : _a.response);\n        }\n        this.recHooks.push({ status, callback });\n        return this;\n    }\n    startTimeout() {\n        if (this.timeoutTimer) {\n            return;\n        }\n        this.ref = this.channel.socket._makeRef();\n        this.refEvent = this.channel._replyEventName(this.ref);\n        const callback = (payload) => {\n            this._cancelRefEvent();\n            this._cancelTimeout();\n            this.receivedResp = payload;\n            this._matchReceive(payload);\n        };\n        this.channel._on(this.refEvent, {}, callback);\n        this.timeoutTimer = setTimeout(() => {\n            this.trigger('timeout', {});\n        }, this.timeout);\n    }\n    trigger(status, response) {\n        if (this.refEvent)\n            this.channel._trigger(this.refEvent, { status, response });\n    }\n    destroy() {\n        this._cancelRefEvent();\n        this._cancelTimeout();\n    }\n    _cancelRefEvent() {\n        if (!this.refEvent) {\n            return;\n        }\n        this.channel._off(this.refEvent, {});\n    }\n    _cancelTimeout() {\n        clearTimeout(this.timeoutTimer);\n        this.timeoutTimer = undefined;\n    }\n    _matchReceive({ status, response, }) {\n        this.recHooks\n            .filter((h) => h.status === status)\n            .forEach((h) => h.callback(response));\n    }\n    _hasReceived(status) {\n        return this.receivedResp && this.receivedResp.status === status;\n    }\n}\n//# sourceMappingURL=push.js.map",
+      "start": 1703362405248,
+      "end": 1703362405299,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pure-annotations",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1703362405299,
+      "end": 1703362405299,
+      "order": "normal"
+    }
+  ]
+}

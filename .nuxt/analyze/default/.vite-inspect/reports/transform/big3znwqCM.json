@@ -1,0 +1,216 @@
+{
+  "resolvedId": "/Users/drigoalexander/Documents/Practice/NUXT/nuxt-course/node_modules/@supabase/storage-js/dist/module/packages/StorageFileApi.js",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nimport { isStorageError, StorageError } from '../lib/errors';\nimport { get, post, remove } from '../lib/fetch';\nimport { resolveFetch } from '../lib/helpers';\nconst DEFAULT_SEARCH_OPTIONS = {\n    limit: 100,\n    offset: 0,\n    sortBy: {\n        column: 'name',\n        order: 'asc',\n    },\n};\nconst DEFAULT_FILE_OPTIONS = {\n    cacheControl: '3600',\n    contentType: 'text/plain;charset=UTF-8',\n    upsert: false,\n};\nexport default class StorageFileApi {\n    constructor(url, headers = {}, bucketId, fetch) {\n        this.url = url;\n        this.headers = headers;\n        this.bucketId = bucketId;\n        this.fetch = resolveFetch(fetch);\n    }\n    /**\n     * Uploads a file to an existing bucket or replaces an existing file at the specified path with a new one.\n     *\n     * @param method HTTP method.\n     * @param path The relative file path. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.\n     * @param fileBody The body of the file to be stored in the bucket.\n     */\n    uploadOrUpdate(method, path, fileBody, fileOptions) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                let body;\n                const options = Object.assign(Object.assign({}, DEFAULT_FILE_OPTIONS), fileOptions);\n                const headers = Object.assign(Object.assign({}, this.headers), (method === 'POST' && { 'x-upsert': String(options.upsert) }));\n                if (typeof Blob !== 'undefined' && fileBody instanceof Blob) {\n                    body = new FormData();\n                    body.append('cacheControl', options.cacheControl);\n                    body.append('', fileBody);\n                }\n                else if (typeof FormData !== 'undefined' && fileBody instanceof FormData) {\n                    body = fileBody;\n                    body.append('cacheControl', options.cacheControl);\n                }\n                else {\n                    body = fileBody;\n                    headers['cache-control'] = `max-age=${options.cacheControl}`;\n                    headers['content-type'] = options.contentType;\n                }\n                const cleanPath = this._removeEmptyFolders(path);\n                const _path = this._getFinalPath(cleanPath);\n                const res = yield this.fetch(`${this.url}/object/${_path}`, Object.assign({ method, body: body, headers }, ((options === null || options === void 0 ? void 0 : options.duplex) ? { duplex: options.duplex } : {})));\n                const data = yield res.json();\n                if (res.ok) {\n                    return {\n                        data: { path: cleanPath, id: data.Id, fullPath: data.Key },\n                        error: null,\n                    };\n                }\n                else {\n                    const error = data;\n                    return { data: null, error };\n                }\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Uploads a file to an existing bucket.\n     *\n     * @param path The file path, including the file name. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.\n     * @param fileBody The body of the file to be stored in the bucket.\n     */\n    upload(path, fileBody, fileOptions) {\n        return __awaiter(this, void 0, void 0, function* () {\n            return this.uploadOrUpdate('POST', path, fileBody, fileOptions);\n        });\n    }\n    /**\n     * Upload a file with a token generated from `createSignedUploadUrl`.\n     * @param path The file path, including the file name. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to upload.\n     * @param token The token generated from `createSignedUploadUrl`\n     * @param fileBody The body of the file to be stored in the bucket.\n     */\n    uploadToSignedUrl(path, token, fileBody, fileOptions) {\n        return __awaiter(this, void 0, void 0, function* () {\n            const cleanPath = this._removeEmptyFolders(path);\n            const _path = this._getFinalPath(cleanPath);\n            const url = new URL(this.url + `/object/upload/sign/${_path}`);\n            url.searchParams.set('token', token);\n            try {\n                let body;\n                const options = Object.assign({ upsert: DEFAULT_FILE_OPTIONS.upsert }, fileOptions);\n                const headers = Object.assign(Object.assign({}, this.headers), { 'x-upsert': String(options.upsert) });\n                if (typeof Blob !== 'undefined' && fileBody instanceof Blob) {\n                    body = new FormData();\n                    body.append('cacheControl', options.cacheControl);\n                    body.append('', fileBody);\n                }\n                else if (typeof FormData !== 'undefined' && fileBody instanceof FormData) {\n                    body = fileBody;\n                    body.append('cacheControl', options.cacheControl);\n                }\n                else {\n                    body = fileBody;\n                    headers['cache-control'] = `max-age=${options.cacheControl}`;\n                    headers['content-type'] = options.contentType;\n                }\n                const res = yield this.fetch(url.toString(), {\n                    method: 'PUT',\n                    body: body,\n                    headers,\n                });\n                const data = yield res.json();\n                if (res.ok) {\n                    return {\n                        data: { path: cleanPath, fullPath: data.Key },\n                        error: null,\n                    };\n                }\n                else {\n                    const error = data;\n                    return { data: null, error };\n                }\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Creates a signed upload URL.\n     * Signed upload URLs can be used to upload files to the bucket without further authentication.\n     * They are valid for 2 hours.\n     * @param path The file path, including the current file name. For example `folder/image.png`.\n     */\n    createSignedUploadUrl(path) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                let _path = this._getFinalPath(path);\n                const data = yield post(this.fetch, `${this.url}/object/upload/sign/${_path}`, {}, { headers: this.headers });\n                const url = new URL(this.url + data.url);\n                const token = url.searchParams.get('token');\n                if (!token) {\n                    throw new StorageError('No token returned by API');\n                }\n                return { data: { signedUrl: url.toString(), path, token }, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Replaces an existing file at the specified path with a new one.\n     *\n     * @param path The relative file path. Should be of the format `folder/subfolder/filename.png`. The bucket must already exist before attempting to update.\n     * @param fileBody The body of the file to be stored in the bucket.\n     */\n    update(path, fileBody, fileOptions) {\n        return __awaiter(this, void 0, void 0, function* () {\n            return this.uploadOrUpdate('PUT', path, fileBody, fileOptions);\n        });\n    }\n    /**\n     * Moves an existing file to a new path in the same bucket.\n     *\n     * @param fromPath The original file path, including the current file name. For example `folder/image.png`.\n     * @param toPath The new file path, including the new file name. For example `folder/image-new.png`.\n     */\n    move(fromPath, toPath) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                const data = yield post(this.fetch, `${this.url}/object/move`, { bucketId: this.bucketId, sourceKey: fromPath, destinationKey: toPath }, { headers: this.headers });\n                return { data, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Copies an existing file to a new path in the same bucket.\n     *\n     * @param fromPath The original file path, including the current file name. For example `folder/image.png`.\n     * @param toPath The new file path, including the new file name. For example `folder/image-copy.png`.\n     */\n    copy(fromPath, toPath) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                const data = yield post(this.fetch, `${this.url}/object/copy`, { bucketId: this.bucketId, sourceKey: fromPath, destinationKey: toPath }, { headers: this.headers });\n                return { data: { path: data.Key }, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Creates a signed URL. Use a signed URL to share a file for a fixed amount of time.\n     *\n     * @param path The file path, including the current file name. For example `folder/image.png`.\n     * @param expiresIn The number of seconds until the signed URL expires. For example, `60` for a URL which is valid for one minute.\n     * @param options.download triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.\n     * @param options.transform Transform the asset before serving it to the client.\n     */\n    createSignedUrl(path, expiresIn, options) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                let _path = this._getFinalPath(path);\n                let data = yield post(this.fetch, `${this.url}/object/sign/${_path}`, Object.assign({ expiresIn }, ((options === null || options === void 0 ? void 0 : options.transform) ? { transform: options.transform } : {})), { headers: this.headers });\n                const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download)\n                    ? `&download=${options.download === true ? '' : options.download}`\n                    : '';\n                const signedUrl = encodeURI(`${this.url}${data.signedURL}${downloadQueryParam}`);\n                data = { signedUrl };\n                return { data, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Creates multiple signed URLs. Use a signed URL to share a file for a fixed amount of time.\n     *\n     * @param paths The file paths to be downloaded, including the current file names. For example `['folder/image.png', 'folder2/image2.png']`.\n     * @param expiresIn The number of seconds until the signed URLs expire. For example, `60` for URLs which are valid for one minute.\n     * @param options.download triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.\n     */\n    createSignedUrls(paths, expiresIn, options) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                const data = yield post(this.fetch, `${this.url}/object/sign/${this.bucketId}`, { expiresIn, paths }, { headers: this.headers });\n                const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download)\n                    ? `&download=${options.download === true ? '' : options.download}`\n                    : '';\n                return {\n                    data: data.map((datum) => (Object.assign(Object.assign({}, datum), { signedUrl: datum.signedURL\n                            ? encodeURI(`${this.url}${datum.signedURL}${downloadQueryParam}`)\n                            : null }))),\n                    error: null,\n                };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Downloads a file from a private bucket. For public buckets, make a request to the URL returned from `getPublicUrl` instead.\n     *\n     * @param path The full path and file name of the file to be downloaded. For example `folder/image.png`.\n     * @param options.transform Transform the asset before serving it to the client.\n     */\n    download(path, options) {\n        return __awaiter(this, void 0, void 0, function* () {\n            const wantsTransformation = typeof (options === null || options === void 0 ? void 0 : options.transform) !== 'undefined';\n            const renderPath = wantsTransformation ? 'render/image/authenticated' : 'object';\n            const transformationQuery = this.transformOptsToQueryString((options === null || options === void 0 ? void 0 : options.transform) || {});\n            const queryString = transformationQuery ? `?${transformationQuery}` : '';\n            try {\n                const _path = this._getFinalPath(path);\n                const res = yield get(this.fetch, `${this.url}/${renderPath}/${_path}${queryString}`, {\n                    headers: this.headers,\n                    noResolveJson: true,\n                });\n                const data = yield res.blob();\n                return { data, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * A simple convenience function to get the URL for an asset in a public bucket. If you do not want to use this function, you can construct the public URL by concatenating the bucket URL with the path to the asset.\n     * This function does not verify if the bucket is public. If a public URL is created for a bucket which is not public, you will not be able to download the asset.\n     *\n     * @param path The path and name of the file to generate the public URL for. For example `folder/image.png`.\n     * @param options.download Triggers the file as a download if set to true. Set this parameter as the name of the file if you want to trigger the download with a different filename.\n     * @param options.transform Transform the asset before serving it to the client.\n     */\n    getPublicUrl(path, options) {\n        const _path = this._getFinalPath(path);\n        const _queryString = [];\n        const downloadQueryParam = (options === null || options === void 0 ? void 0 : options.download)\n            ? `download=${options.download === true ? '' : options.download}`\n            : '';\n        if (downloadQueryParam !== '') {\n            _queryString.push(downloadQueryParam);\n        }\n        const wantsTransformation = typeof (options === null || options === void 0 ? void 0 : options.transform) !== 'undefined';\n        const renderPath = wantsTransformation ? 'render/image' : 'object';\n        const transformationQuery = this.transformOptsToQueryString((options === null || options === void 0 ? void 0 : options.transform) || {});\n        if (transformationQuery !== '') {\n            _queryString.push(transformationQuery);\n        }\n        let queryString = _queryString.join('&');\n        if (queryString !== '') {\n            queryString = `?${queryString}`;\n        }\n        return {\n            data: { publicUrl: encodeURI(`${this.url}/${renderPath}/public/${_path}${queryString}`) },\n        };\n    }\n    /**\n     * Deletes files within the same bucket\n     *\n     * @param paths An array of files to delete, including the path and file name. For example [`'folder/image.png'`].\n     */\n    remove(paths) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                const data = yield remove(this.fetch, `${this.url}/object/${this.bucketId}`, { prefixes: paths }, { headers: this.headers });\n                return { data, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    /**\n     * Get file metadata\n     * @param id the file id to retrieve metadata\n     */\n    // async getMetadata(\n    //   id: string\n    // ): Promise<\n    //   | {\n    //       data: Metadata\n    //       error: null\n    //     }\n    //   | {\n    //       data: null\n    //       error: StorageError\n    //     }\n    // > {\n    //   try {\n    //     const data = await get(this.fetch, `${this.url}/metadata/${id}`, { headers: this.headers })\n    //     return { data, error: null }\n    //   } catch (error) {\n    //     if (isStorageError(error)) {\n    //       return { data: null, error }\n    //     }\n    //     throw error\n    //   }\n    // }\n    /**\n     * Update file metadata\n     * @param id the file id to update metadata\n     * @param meta the new file metadata\n     */\n    // async updateMetadata(\n    //   id: string,\n    //   meta: Metadata\n    // ): Promise<\n    //   | {\n    //       data: Metadata\n    //       error: null\n    //     }\n    //   | {\n    //       data: null\n    //       error: StorageError\n    //     }\n    // > {\n    //   try {\n    //     const data = await post(\n    //       this.fetch,\n    //       `${this.url}/metadata/${id}`,\n    //       { ...meta },\n    //       { headers: this.headers }\n    //     )\n    //     return { data, error: null }\n    //   } catch (error) {\n    //     if (isStorageError(error)) {\n    //       return { data: null, error }\n    //     }\n    //     throw error\n    //   }\n    // }\n    /**\n     * Lists all the files within a bucket.\n     * @param path The folder path.\n     */\n    list(path, options, parameters) {\n        return __awaiter(this, void 0, void 0, function* () {\n            try {\n                const body = Object.assign(Object.assign(Object.assign({}, DEFAULT_SEARCH_OPTIONS), options), { prefix: path || '' });\n                const data = yield post(this.fetch, `${this.url}/object/list/${this.bucketId}`, body, { headers: this.headers }, parameters);\n                return { data, error: null };\n            }\n            catch (error) {\n                if (isStorageError(error)) {\n                    return { data: null, error };\n                }\n                throw error;\n            }\n        });\n    }\n    _getFinalPath(path) {\n        return `${this.bucketId}/${path}`;\n    }\n    _removeEmptyFolders(path) {\n        return path.replace(/^\\/|\\/$/g, '').replace(/\\/+/g, '/');\n    }\n    transformOptsToQueryString(transform) {\n        const params = [];\n        if (transform.width) {\n            params.push(`width=${transform.width}`);\n        }\n        if (transform.height) {\n            params.push(`height=${transform.height}`);\n        }\n        if (transform.resize) {\n            params.push(`resize=${transform.resize}`);\n        }\n        if (transform.format) {\n            params.push(`format=${transform.format}`);\n        }\n        if (transform.quality) {\n            params.push(`quality=${transform.quality}`);\n        }\n        return params.join('&');\n    }\n}\n//# sourceMappingURL=StorageFileApi.js.map",
+      "start": 1703362405293,
+      "end": 1703362405309,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1703362405309,
+      "end": 1703362405309,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1703362405309,
+      "end": 1703362405310,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pure-annotations",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1703362405310,
+      "end": 1703362405310,
+      "order": "normal"
+    }
+  ]
+}

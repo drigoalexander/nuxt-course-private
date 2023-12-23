@@ -1,0 +1,220 @@
+{
+  "resolvedId": "/Users/drigoalexander/Documents/Practice/NUXT/nuxt-course/components/CompleteLessonButton.vue",
+  "transforms": [
+    {
+      "name": "vite:load-fallback",
+      "result": "<script setup>\nconst props = defineProps({\n  modelValue: {\n    type: Boolean,\n    default: false,\n  },\n});\n\ndefineEmits([\"update:modelValue\"]);\n</script>\n\n<template>\n  <button\n    class=\"btn py-4\"\n    :class=\"{\n      'btn-primary': !modelValue,\n      'btn-success': modelValue,\n    }\"\n    @click=\"$emit('update:modelValue', !modelValue)\"\n  >\n    {{ modelValue ? \"Completed\" : \"Mark as completed\" }}\n  </button>\n</template>\n<style scoped>\n::selection {\n  display: none;\n}\n</style>\n",
+      "start": 1703362404961,
+      "end": 1703362405011,
+      "sourcemaps": null
+    },
+    {
+      "name": "nuxt:layer-aliasing",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:server-devonly:transform",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "pre"
+    },
+    {
+      "name": "nuxt:client-fallback-auto-id",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "pre"
+    },
+    {
+      "name": "vite:css",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "normal"
+    },
+    {
+      "name": "vite:esbuild",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "normal"
+    },
+    {
+      "name": "vite:json",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker",
+      "start": 1703362405011,
+      "end": 1703362405011,
+      "order": "normal"
+    },
+    {
+      "name": "vite:vue",
+      "result": "import { toDisplayString as _toDisplayString, normalizeClass as _normalizeClass, openBlock as _openBlock, createElementBlock as _createElementBlock } from \"vue\"\n\n\nconst _sfc_main = {\n  __name: 'CompleteLessonButton',\n  props: {\n  modelValue: {\n    type: Boolean,\n    default: false,\n  },\n},\n  emits: [\"update:modelValue\"],\n  setup(__props) {\n\nconst props = __props;\n\n\n\nreturn (_ctx, _cache) => {\n  return (_openBlock(), _createElementBlock(\"button\", {\n    class: _normalizeClass([\"btn py-4\", {\n      'btn-primary': !__props.modelValue,\n      'btn-success': __props.modelValue,\n    }]),\n    onClick: _cache[0] || (_cache[0] = $event => (_ctx.$emit('update:modelValue', !__props.modelValue)))\n  }, _toDisplayString(__props.modelValue ? \"Completed\" : \"Mark as completed\"), 3))\n}\n}\n\n}\n\n\nimport \"/Users/drigoalexander/Documents/Practice/NUXT/nuxt-course/components/CompleteLessonButton.vue?vue&type=style&index=0&scoped=ce9c288f&lang.css\"\n\nimport _export_sfc from '\u0000plugin-vue:export-helper'\nexport default /*#__PURE__*/_export_sfc(_sfc_main, [['__scopeId',\"data-v-ce9c288f\"]])",
+      "start": 1703362405011,
+      "end": 1703362405012,
+      "order": "normal",
+      "sourcemaps": {
+        "mappings": ""
+      }
+    },
+    {
+      "name": "vite:vue-jsx",
+      "start": 1703362405012,
+      "end": 1703362405012,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405012,
+      "end": 1703362405012,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:remove-plugin-metadata",
+      "start": 1703362405012,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:chunk-error",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:components:imports",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "replace",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "ssr-styles",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:define",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:css-post",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:build-html",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:worker-import-meta-url",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:asset-import-meta-url",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "commonjs",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:dynamic-import-vars",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:import-glob",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "nuxt:composable-keys",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:imports-transform",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "unctx:transform",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pages-macros-transform",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:runtime-paths-dep",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:pure-annotations",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:route-injection-plugin",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:components-loader",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "nuxt:tree-shake-composables:transform",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "post"
+    },
+    {
+      "name": "vite:build-import-analysis",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    },
+    {
+      "name": "vite:reporter",
+      "start": 1703362405013,
+      "end": 1703362405013,
+      "order": "normal"
+    }
+  ]
+}
