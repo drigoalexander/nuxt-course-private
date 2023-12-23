@@ -38,10 +38,6 @@ const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { query } = useRoute();
 
-definePageMeta({
-  middleware: "logged",
-});
-
 const signInWithOAuth = () => {
   supabase.auth.signInWithOAuth({
     provider: "github",
