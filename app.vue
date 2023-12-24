@@ -1,10 +1,6 @@
 <template>
   <!-- <PageLoader v-if="loading" /> -->
-  <Transition v-if="loading">
-    <div class="flex min-h-screen w-full items-center justify-center bg-black">
-      <div class="loader"></div>
-    </div>
-  </Transition>
+  <Transition v-if="loading"><PageLoader /> </Transition>
   <LazyNuxtPage />
 </template>
 
@@ -29,32 +25,6 @@ useHead({
 <style>
 body {
   font-family: Montserrat;
-}
-
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: 35px;
-  aspect-ratio: 1;
-  border: 3px solid #fff;
-  animation: l1 2s infinite;
-}
-@keyframes l1 {
-  0% {
-    border-radius: 50% 50% 0 0;
-  }
-  25% {
-    border-radius: 0 50% 50% 0;
-  }
-  50% {
-    border-radius: 0 0 50% 50%;
-  }
-  75% {
-    border-radius: 50% 0 0 50%;
-  }
-  100% {
-    border-radius: 50% 50% 0 0;
-  }
 }
 
 .v-enter-active,

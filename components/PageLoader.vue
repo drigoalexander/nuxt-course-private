@@ -1,32 +1,33 @@
 <template>
-  <div
-    class="absolute staggering-grid-demo left-0 top-0 -z-10 h-[100vh] title grid grid-cols-[repeat(24,_minmax(0,_1fr))] w-full gap-4"
-  >
-    <div
-      style="
-        border-radius: 10px;
-        background: #161616;
-        box-shadow: 20px 20px 60px #0c0c0c, -20px -20px 60px #202020;
-      "
-      class="shadow-neumor cursor-pointer el w-full aspect-square transform"
-      v-for="(el, idx) in 336"
-    ></div>
+  <div class="flex min-h-screen w-full items-center justify-center bg-black">
+    <div class="loader"></div>
   </div>
 </template>
 
-<script setup>
-const { $anime } = useNuxtApp();
-
-onMounted(() => {
-  $anime({
-    targets: "div .staggering-grid-demo .el",
-    scale: [
-      { value: 0.1, easing: "easeOutSine", duration: 500 },
-      { value: 1, easing: "easeInOutQuad", duration: 1000 },
-    ],
-
-    delay: $anime.stagger(200, { grid: [24, 14], from: "center" }),
-    loop: true,
-  });
-});
-</script>
+<style scoped>
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 35px;
+  aspect-ratio: 1;
+  border: 3px solid #fff;
+  animation: l1 2s infinite;
+}
+@keyframes l1 {
+  0% {
+    border-radius: 50% 50% 0 0;
+  }
+  25% {
+    border-radius: 0 50% 50% 0;
+  }
+  50% {
+    border-radius: 0 0 50% 50%;
+  }
+  75% {
+    border-radius: 50% 0 0 50%;
+  }
+  100% {
+    border-radius: 50% 50% 0 0;
+  }
+}
+</style>
