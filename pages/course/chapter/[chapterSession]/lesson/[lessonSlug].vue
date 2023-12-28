@@ -26,7 +26,6 @@ const { initialize, toggleComplete } = store;
 
 const user = useSupabaseUser();
 
-console.log(user.value.email);
 initialize();
 
 definePageMeta({

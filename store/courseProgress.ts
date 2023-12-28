@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import type { CourseProgress } from "~/types/course";
 
 export const useCourseProgress = defineStore("courseProgress", () => {
   const user = useSupabaseUser();
@@ -8,9 +9,17 @@ export const useCourseProgress = defineStore("courseProgress", () => {
   async function initialize() {
     if (initialized.value) return;
     initialized.value = true;
+
+    const lessonProgress = await $fetch("/api/user/progress", {
+      method: "POST",
+      body: {
+        userEmail: user.value?.email,
+      },
+    });
+
+    progress.value = lessonProgress;
   }
   const toggleComplete = async (chapter: string, lesson: string) => {
-    const user = useSupabaseUser();
     if (!user.value) return;
     if (!chapter || !lesson) {
       const {

@@ -45,3 +45,11 @@ export type CourseMeta = {
   title: string;
   chapters: ChapterMeta[];
 };
+
+export type ChapterProgress = {
+  [key: string]: boolean;
+};
+
+export type CourseProgress = {
+  [key: string]: ChapterProgress;
+};
