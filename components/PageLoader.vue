@@ -3,21 +3,20 @@
     class="flex min-h-screen w-full items-center justify-center bg-black gap-4 flex-col"
   >
     <div class="loader"></div>
-    <span v-if="props.isLogin" class="text-xl -tracking-wider"
-      >Hang on tight</span
+    <span v-if="loginProcess" class="text-xl -tracking-wider"
+      >Authenticating</span
     >
+    <span v-else class="text-xl -tracking-wider">Hang on tight</span>
   </div>
 </template>
-
 <script setup>
 const props = defineProps({
-  isLogin: {
+  loginProcess: {
     type: Boolean,
     default: false,
   },
 });
 </script>
-
 <style scoped>
 .loader {
   width: 35px;

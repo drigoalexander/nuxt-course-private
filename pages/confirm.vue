@@ -1,16 +1,21 @@
 <template>
   <div>
-    <PageLoader :isLogin="true" />
+    <PageLoader :loginProcess="true" />
   </div>
 </template>
 
 <script setup lang="ts">
+const { query } = useRoute();
+const supabase = useSupabaseClient();
 const user = useSupabaseUser();
+
 watch(
   user,
   () => {
     if (user.value) {
-      return navigateTo("/");
+      navigateTo(query.redirectTo as string, {
+        replace: true,
+      });
     }
   },
   { immediate: true }
