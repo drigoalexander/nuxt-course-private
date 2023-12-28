@@ -42,10 +42,6 @@ function animate(idx) {
     }),
   });
 }
-
-function test() {
-  console.log("asd");
-}
 </script>
 
 <template>

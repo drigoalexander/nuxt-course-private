@@ -34,7 +34,6 @@
 </template>
 
 <script setup>
-const url = useRequestURL();
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { query } = useRoute();
@@ -43,7 +42,7 @@ const signInWithOAuth = () => {
   supabase.auth.signInWithOAuth({
     provider: "github",
     options: {
-      redirectTo: query.redirectTo,
+      emailRedirectTo: `/confirm?${query.redirectTo}`,
     },
   });
 };
