@@ -1,5 +1,4 @@
 <script setup>
-// import { RocketLaunchIcon, ChartBarIcon } from "@heroicons/vue/24/outline";
 const { $anime } = useNuxtApp();
 
 const columns = ref(1);
@@ -8,8 +7,8 @@ const widthRec = ref(50);
 const heightRec = ref(50);
 const themes = ref(["#FCF84A", "#FE2857", "#AF1DF5", "#171717"]);
 let themeIdx = ref(0);
-const colorMode = useColorMode;
-
+const colorMode = useColorMode();
+const colorTrigger = ref(null);
 onMounted(() => {
   columns.value = Math.floor(document.body.clientWidth / widthRec.value);
   rows.value = Math.floor(document.body.clientHeight / heightRec.value);
@@ -17,6 +16,23 @@ onMounted(() => {
   window.addEventListener("resize", () => {
     columns.value = Math.floor(document.body.clientWidth / widthRec.value);
     rows.value = Math.floor(document.body.clientHeight / heightRec.value);
+  });
+
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      themeIdx.value++;
+      if (themeIdx.value === 4) {
+        themeIdx.value = 0;
+      }
+      $anime({
+        targets: ".tiles",
+        backgroundColor: themes.value[themeIdx.value],
+        delay: $anime.stagger(30, {
+          grid: [columns.value, rows.value],
+          from: "center",
+        }),
+      });
+    }
   });
 });
 
@@ -45,7 +61,8 @@ function animate(idx) {
 </script>
 
 <template>
-  <div class="sr-only" @keydown.enter="test">
+  <ModalsCard />
+  <div ref="colorTrigger" class="pointer-events-auto z-20 sr-only absolute">
     <select v-model="$colorMode.preference">
       <option value="dark"></option>
       <option value="light"></option>
@@ -381,9 +398,7 @@ function animate(idx) {
         <div
           class="flex-row-reverse items-center justify-between space-y-12 text-gray-600 md:flex md:gap-6 lg:gap-12 lg:space-y-0"
         >
-          <div class="relative ml-auto h-full md:w-1/2 chart test">
-            <!-- <ChartBarIcon class="fill-white stroke-transparent" /> -->
-          </div>
+          <div class="relative ml-auto h-full md:w-1/2 chart test"></div>
 
           <div class="md:w-1/2 lg:w-[47%]">
             <h2
@@ -436,11 +451,7 @@ function animate(idx) {
               <div class="flex gap-4 pt-4 md:items-center">
                 <div
                   class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900"
-                >
-                  <!-- <RocketLaunchIcon
-                    class="w-2/3 mx-auto stroke-1 stroke-gray-200"
-                  /> -->
-                </div>
+                ></div>
                 <div class="w-5/6">
                   <h3
                     class="text-lg font-semibold text-gray-700 dark:text-white"
@@ -454,6 +465,9 @@ function animate(idx) {
               </div>
             </div>
           </div>
+        </div>
+        <div class="mt-8 md:pt-32 lg:mt-20 xl:mt-16">
+          <PricingCard />
         </div>
       </div>
     </div>
