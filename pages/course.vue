@@ -2,6 +2,7 @@
 const route = useRoute();
 const user = useSupabaseUser();
 const course = await useCourse();
+console.log(user);
 </script>
 
 <template>

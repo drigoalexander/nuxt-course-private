@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex min-h-screen w-full items-center justify-center bg-black gap-4 flex-col"
+    class="flex min-h-screen w-full items-center justify-center bg-black gap-4 flex-col fixed left-0 top-0 z-50"
   >
     <div class="loader"></div>
     <span v-if="loginProcess" class="text-xl -tracking-wider"
