@@ -10,14 +10,15 @@
 const user = useSupabaseUser();
 const route = useRoute();
 
-watchEffect(
+watch(
+  user,
   async () => {
     if (user.value) {
       await useFetch(`/api/user/linkWithPurchase/${route.params.id}`, {
         headers: useRequestHeaders(["cookie"]),
       });
 
-      await redirect();
+      redirect();
     }
   },
   {

@@ -37,8 +37,7 @@
 const supabase = useSupabaseClient();
 const user = useSupabaseUser();
 const { query } = useRoute();
-const redirectTo =
-  window.location.origin + "/confirm" + `?redirectTo=${query.redirectTo}`;
+const redirectTo = window.location.origin + query.redirectTo;
 watchEffect(async () => {
   if (user.value) {
     await navigateTo(redirectTo, {
