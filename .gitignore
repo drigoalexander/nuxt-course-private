@@ -4,8 +4,6 @@ node_modules/
 .env
 .nuxt
 .output
-.output
 .data
-.nuxt
 .nitro
 .cache
