@@ -1,6 +1,6 @@
 <script setup>
 const { $anime } = useNuxtApp();
-
+const config = useRuntimeConfig();
 const columns = ref(1);
 const rows = ref(1);
 const widthRec = ref(50);
@@ -9,6 +9,17 @@ const themes = ref(["#FCF84A", "#FE2857", "#AF1DF5", "#171717"]);
 let themeIdx = ref(0);
 const colorMode = useColorMode();
 const colorTrigger = ref(null);
+
+useHead({
+  script: [
+    {
+      type: "text/javascript",
+      src: config.public.snapEndpoint,
+      "data-client-key": config.public.mdClient,
+    },
+  ],
+});
+
 onMounted(() => {
   columns.value = Math.floor(document.body.clientWidth / widthRec.value);
   rows.value = Math.floor(document.body.clientHeight / heightRec.value);
@@ -468,6 +479,9 @@ function animate(idx) {
         </div>
         <div class="mt-8 md:pt-32 lg:mt-20 xl:mt-16">
           <PricingCard />
+        </div>
+        <div class="mt-8 md:pt-32 lg:mt-20 xl:mt-16">
+          <div id="snap-container"></div>
         </div>
       </div>
     </div>

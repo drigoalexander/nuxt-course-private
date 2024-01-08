@@ -7,6 +7,14 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+  runtimeConfig: {
+    public: {
+      mdClient: process.env.MD_ClIENT,
+      snapEndpoint: process.env.SNAP_ENDPOINT,
+    },
+    mdSecret: process.env.MD_SECRET,
+    mdEnpoint: process.env.MIDTRANS_ENDPOINT,
+  },
   modules: [
     "@nuxtjs/tailwindcss",
     "@vueuse/nuxt",
