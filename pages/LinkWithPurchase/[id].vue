@@ -10,21 +10,22 @@
 const user = useSupabaseUser();
 const route = useRoute();
 
-watch(
-  user,
-  async () => {
-    if (user.value) {
-      await useFetch(`/api/user/linkWithPurchase/${route.params.id}`, {
-        headers: useRequestHeaders(["cookie"]),
-      });
-
-      redirect();
+onMounted(() => {
+  watch(
+    user,
+    async () => {
+      if (user.value) {
+        await useFetch(`/api/user/linkWithPurchase/${route.params.id}`, {
+          headers: useRequestHeaders(["cookie"]),
+        });
+        await redirect();
+      }
+    },
+    {
+      immediate: true,
     }
-  },
-  {
-    immediate: true,
-  }
-);
+  );
+});
 
 async function redirect() {
   await navigateTo("/", {
