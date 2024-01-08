@@ -1,11 +1,4 @@
 const client_manifest = {
-  "__plugin-vue_export-helper.c27b6911.js": {
-    "resourceType": "script",
-    "module": true,
-    "prefetch": true,
-    "preload": true,
-    "file": "_plugin-vue_export-helper.c27b6911.js"
-  },
   "_browser.a6d212f2.js": {
     "resourceType": "script",
     "module": true,
@@ -14,22 +7,22 @@ const client_manifest = {
     "file": "browser.a6d212f2.js",
     "isDynamicEntry": true
   },
-  "_nuxt-link.94791866.js": {
+  "_nuxt-link.2013e3c1.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "nuxt-link.94791866.js",
+    "file": "nuxt-link.2013e3c1.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_useCourse.77b1cffa.js": {
+  "_useCourse.08ead264.js": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "useCourse.77b1cffa.js",
+    "file": "useCourse.08ead264.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ]
@@ -39,24 +32,12 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "auth.0bea3fa0.js",
+    "file": "auth.5c0cd29e.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ],
     "isDynamicEntry": true,
     "src": "middleware/auth.ts"
-  },
-  "middleware/logged.ts": {
-    "resourceType": "script",
-    "module": true,
-    "prefetch": true,
-    "preload": true,
-    "file": "logged.667d3d92.js",
-    "imports": [
-      "node_modules/nuxt/dist/app/entry.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "middleware/logged.ts"
   },
   "node_modules/.cache/nuxt-google-fonts/fonts/Montserrat-400-1.woff2": {
     "resourceType": "font",
@@ -92,7 +73,7 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true,
-    "file": "entry.0da5b4a1.css",
+    "file": "entry.01e24f77.css",
     "src": "node_modules/nuxt/dist/app/entry.css"
   },
   "node_modules/nuxt/dist/app/entry.js": {
@@ -101,21 +82,20 @@ const client_manifest = {
     "prefetch": true,
     "preload": true,
     "css": [
-      "entry.0da5b4a1.css"
+      "entry.01e24f77.css"
     ],
     "dynamicImports": [
       "middleware/auth.ts",
-      "middleware/logged.ts",
       "_browser.a6d212f2.js",
       "node_modules/nuxt/dist/pages/runtime/page.js"
     ],
-    "file": "entry.e8c8c236.js",
+    "file": "entry.cc832dd7.js",
     "isEntry": true,
     "src": "node_modules/nuxt/dist/app/entry.js",
     "_globalCSS": true
   },
-  "entry.0da5b4a1.css": {
-    "file": "entry.0da5b4a1.css",
+  "entry.01e24f77.css": {
+    "file": "entry.01e24f77.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -125,24 +105,36 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "page.e78d7e30.js",
+    "file": "page.c84922e3.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ],
     "isDynamicEntry": true,
     "src": "node_modules/nuxt/dist/pages/runtime/page.js"
   },
+  "pages/confirm.vue": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "file": "confirm.4a0d2daf.js",
+    "imports": [
+      "node_modules/nuxt/dist/app/entry.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "pages/confirm.vue"
+  },
   "pages/course.vue": {
     "resourceType": "script",
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "course.554cc5e6.js",
+    "file": "course.162bdeb8.js",
     "imports": [
-      "_nuxt-link.94791866.js",
+      "_nuxt-link.2013e3c1.js",
       "node_modules/nuxt/dist/app/entry.js",
       "node_modules/nuxt/dist/pages/runtime/page.js",
-      "_useCourse.77b1cffa.js"
+      "_useCourse.08ead264.js"
     ],
     "isDynamicEntry": true,
     "src": "pages/course.vue"
@@ -160,11 +152,10 @@ const client_manifest = {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "_lessonSlug_.e830594f.js",
+    "file": "_lessonSlug_.65c1b019.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js",
-      "_useCourse.77b1cffa.js",
-      "__plugin-vue_export-helper.c27b6911.js"
+      "_useCourse.08ead264.js"
     ],
     "isDynamicEntry": true,
     "src": "pages/course/chapter/[chapterSession]/lesson/[lessonSlug].vue"
@@ -179,7 +170,7 @@ const client_manifest = {
     "resourceType": "style",
     "prefetch": true,
     "preload": true,
-    "file": "index.37f9c3ec.css",
+    "file": "index.63c8043c.css",
     "src": "pages/index.css"
   },
   "pages/index.vue": {
@@ -188,17 +179,16 @@ const client_manifest = {
     "prefetch": true,
     "preload": true,
     "css": [],
-    "file": "index.8fe3e075.js",
+    "file": "index.8a43bf8a.js",
     "imports": [
-      "_nuxt-link.94791866.js",
-      "node_modules/nuxt/dist/app/entry.js",
-      "__plugin-vue_export-helper.c27b6911.js"
+      "_nuxt-link.2013e3c1.js",
+      "node_modules/nuxt/dist/app/entry.js"
     ],
     "isDynamicEntry": true,
     "src": "pages/index.vue"
   },
-  "index.37f9c3ec.css": {
-    "file": "index.37f9c3ec.css",
+  "index.63c8043c.css": {
+    "file": "index.63c8043c.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -208,7 +198,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "login.155cab21.js",
+    "file": "login.15cecfaa.js",
     "imports": [
       "node_modules/nuxt/dist/app/entry.js"
     ],

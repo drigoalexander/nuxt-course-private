@@ -21,11 +21,19 @@ declare module 'nuxt/schema' {
       cdnURL: string,
    },
 
+   mdSecret: string,
+
+   mdEnpoint: string,
+
    supabase: {
       serviceKey: any,
    },
   }
   interface PublicRuntimeConfig {
+   mdClient: string,
+
+   snapEndpoint: string,
+
    supabase: {
       url: string,
 

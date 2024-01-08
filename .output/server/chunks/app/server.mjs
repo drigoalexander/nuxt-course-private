@@ -1,11 +1,11 @@
-import { hasInjectionContext, getCurrentInstance, version, ref, watchEffect, watch, inject, useSSRContext, unref, toRef, isRef, defineComponent, createApp, effectScope, reactive, isReactive, toRaw, getCurrentScope, onScopeDispose, nextTick, defineAsyncComponent, provide, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, shallowRef, shallowReactive, isReadonly, toRefs, markRaw, computed, isShallow, mergeProps } from 'vue';
-import { u as useRuntimeConfig$1, i as withQuery, a as hasProtocol, p as parseURL, j as isScriptProtocol, k as joinURL, f as createError$1, l as getRequestHeaders, $ as $fetch, s as sanitizeStatusCode, m as createHooks, e as defu, n as parse, o as getRequestHeader, q as destr, t as isEqual, v as setCookie, x as getCookie, y as deleteCookie } from '../nitro/node-server.mjs';
+import { hasInjectionContext, getCurrentInstance, version, ref, watchEffect, watch, inject, useSSRContext, unref, toRef, isRef, mergeProps, defineComponent, createApp, effectScope, reactive, isReactive, toRaw, getCurrentScope, onScopeDispose, nextTick, defineAsyncComponent, provide, onErrorCaptured, onServerPrefetch, createVNode, resolveDynamicComponent, shallowRef, shallowReactive, isReadonly, toRefs, markRaw, computed, isShallow } from 'vue';
+import { i as useRuntimeConfig$1, w as withQuery, n as hasProtocol, p as parseURL, o as isScriptProtocol, j as joinURL, c as createError$1, q as getRequestHeaders, $ as $fetch, t as sanitizeStatusCode, v as createHooks, x as defu, y as parse, z as getRequestHeader, A as destr, B as isEqual, C as setCookie, D as getCookie, E as deleteCookie } from '../nitro/node-server.mjs';
 import { getActiveHead } from 'unhead';
 import { defineHeadPlugin, composableNames } from '@unhead/shared';
 import { createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { createClient } from '@supabase/supabase-js';
 import anime from 'animejs';
-import { ssrRenderComponent, ssrRenderSuspense, ssrRenderVNode, ssrRenderAttrs, ssrInterpolate } from 'vue/server-renderer';
+import { ssrRenderAttrs, ssrRenderComponent, ssrRenderSuspense, ssrRenderVNode, ssrInterpolate } from 'vue/server-renderer';
 import 'node:http';
 import 'node:https';
 import 'fs';
@@ -683,30 +683,35 @@ function executeAsync(function_) {
   }
   return [awaitable, restore];
 }
-const __nuxt_page_meta$1 = {
+const __nuxt_page_meta = {
   middleware: ["auth"]
 };
-const __nuxt_page_meta = {
-  middleware: "logged"
-};
 const _routes = [
+  {
+    name: "confirm",
+    path: "/confirm",
+    meta: {},
+    alias: [],
+    redirect: void 0,
+    component: () => import('./_nuxt/confirm-67ff099c.mjs').then((m) => m.default || m)
+  },
   {
     name: "course",
     path: "/course",
     children: [
       {
-        name: (__nuxt_page_meta$1 == null ? void 0 : __nuxt_page_meta$1.name) ?? "course-chapter-chapterSession-lesson-lessonSlug",
-        path: (__nuxt_page_meta$1 == null ? void 0 : __nuxt_page_meta$1.path) ?? "chapter/:chapterSession()/lesson/:lessonSlug()",
-        meta: __nuxt_page_meta$1 || {},
-        alias: (__nuxt_page_meta$1 == null ? void 0 : __nuxt_page_meta$1.alias) || [],
-        redirect: (__nuxt_page_meta$1 == null ? void 0 : __nuxt_page_meta$1.redirect) || void 0,
-        component: () => import('./_nuxt/_lessonSlug_-bfb5d5b4.mjs').then((m) => m.default || m)
+        name: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.name) ?? "course-chapter-chapterSession-lesson-lessonSlug",
+        path: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.path) ?? "chapter/:chapterSession()/lesson/:lessonSlug()",
+        meta: __nuxt_page_meta || {},
+        alias: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.alias) || [],
+        redirect: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.redirect) || void 0,
+        component: () => import('./_nuxt/_lessonSlug_-f7f9827e.mjs').then((m) => m.default || m)
       }
     ],
     meta: {},
     alias: [],
     redirect: void 0,
-    component: () => import('./_nuxt/course-881da760.mjs').then((m) => m.default || m)
+    component: () => import('./_nuxt/course-dd2cd733.mjs').then((m) => m.default || m)
   },
   {
     name: "index",
@@ -714,15 +719,15 @@ const _routes = [
     meta: {},
     alias: [],
     redirect: void 0,
-    component: () => import('./_nuxt/index-86b214af.mjs').then((m) => m.default || m)
+    component: () => import('./_nuxt/index-ee5b245b.mjs').then((m) => m.default || m)
   },
   {
-    name: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.name) ?? "login",
-    path: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.path) ?? "/login",
-    meta: __nuxt_page_meta || {},
-    alias: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.alias) || [],
-    redirect: (__nuxt_page_meta == null ? void 0 : __nuxt_page_meta.redirect) || void 0,
-    component: () => import('./_nuxt/login-807e08c9.mjs').then((m) => m.default || m)
+    name: "login",
+    path: "/login",
+    meta: {},
+    alias: [],
+    redirect: void 0,
+    component: () => import('./_nuxt/login-6ab12be3.mjs').then((m) => m.default || m)
   }
 ];
 const routerOptions0 = {
@@ -799,8 +804,7 @@ const globalMiddleware = [
   manifest_45route_45rule
 ];
 const namedMiddleware = {
-  auth: () => import('./_nuxt/auth-6c11205d.mjs'),
-  logged: () => import('./_nuxt/logged-4fc537fc.mjs')
+  auth: () => import('./_nuxt/auth-601b8f32.mjs')
 };
 const plugin$2 = /* @__PURE__ */ defineNuxtPlugin({
   name: "nuxt:router",
@@ -1423,19 +1427,70 @@ const plugins = [
   plugin_server_XNCxeHyTuP,
   plugin
 ];
-const __nuxt_component_0_lazy = /* @__PURE__ */ defineAsyncComponent(() => import('./_nuxt/page-1218e96a.mjs').then((m) => m.default || m));
+const _export_sfc = (sfc, props) => {
+  const target = sfc.__vccOpts || sfc;
+  for (const [key, val] of props) {
+    target[key] = val;
+  }
+  return target;
+};
+const _sfc_main$3 = {
+  __name: "PageLoader",
+  __ssrInlineRender: true,
+  props: {
+    loginProcess: {
+      type: Boolean,
+      default: false
+    }
+  },
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "flex min-h-screen w-full items-center justify-center bg-black gap-4 flex-col" }, _attrs))} data-v-6d0d87b3><div class="loader" data-v-6d0d87b3></div>`);
+      if (__props.loginProcess) {
+        _push(`<span class="text-xl -tracking-wider" data-v-6d0d87b3>Authenticating</span>`);
+      } else {
+        _push(`<span class="text-xl -tracking-wider" data-v-6d0d87b3>Hang on tight</span>`);
+      }
+      _push(`</div>`);
+    };
+  }
+};
+const _sfc_setup$3 = _sfc_main$3.setup;
+_sfc_main$3.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/PageLoader.vue");
+  return _sfc_setup$3 ? _sfc_setup$3(props, ctx) : void 0;
+};
+const __nuxt_component_0 = /* @__PURE__ */ _export_sfc(_sfc_main$3, [["__scopeId", "data-v-6d0d87b3"]]);
+const __nuxt_component_1_lazy = /* @__PURE__ */ defineAsyncComponent(() => import('./_nuxt/page-1218e96a.mjs').then((m) => m.default || m));
 const _sfc_main$2 = /* @__PURE__ */ defineComponent({
   __name: "app",
   __ssrInlineRender: true,
   setup(__props) {
+    const nuxt = /* @__PURE__ */ useNuxtApp();
+    const loading = ref(false);
+    nuxt.hook("page:start", () => {
+      loading.value = true;
+    });
+    nuxt.hook("page:finish", () => {
+      loading.value = false;
+    });
     useHead({
       titleTemplate: (titleChunk) => {
         return titleChunk ? `${titleChunk} - Nuxt 3 Course` : "Nuxt 3 Course";
       }
     });
     return (_ctx, _push, _parent, _attrs) => {
-      const _component_LazyNuxtPage = __nuxt_component_0_lazy;
-      _push(ssrRenderComponent(_component_LazyNuxtPage, _attrs, null, _parent));
+      const _component_PageLoader = __nuxt_component_0;
+      const _component_LazyNuxtPage = __nuxt_component_1_lazy;
+      _push(`<!--[-->`);
+      if (unref(loading)) {
+        _push(ssrRenderComponent(_component_PageLoader, null, null, _parent));
+      } else {
+        _push(`<!---->`);
+      }
+      _push(ssrRenderComponent(_component_LazyNuxtPage, null, null, _parent));
+      _push(`<!--]-->`);
     };
   }
 });
@@ -1539,5 +1594,5 @@ let entry;
 }
 const entry$1 = (ctx) => entry(ctx);
 
-export { LayoutMetaSymbol as L, PageRouteSymbol as P, useRoute as a, useHead as b, createError as c, defineStore as d, entry$1 as default, useSupabaseClient as e, appPageTransition as f, appKeepalive as g, useNuxtApp as h, asyncDataDefaults as i, fetchDefaults as j, useRequestFetch as k, useRequestHeaders as l, useRouter as m, navigateTo as n, nuxtLinkDefaults as o, defineNuxtRouteMiddleware as p, useSupabaseUser as u };
+export { LayoutMetaSymbol as L, PageRouteSymbol as P, __nuxt_component_0 as _, useSupabaseClient as a, useSupabaseUser as b, createError as c, defineStore as d, entry$1 as default, useHead as e, appPageTransition as f, appKeepalive as g, useNuxtApp as h, asyncDataDefaults as i, fetchDefaults as j, useRequestFetch as k, useRequestHeaders as l, _export_sfc as m, navigateTo as n, useRouter as o, nuxtLinkDefaults as p, defineNuxtRouteMiddleware as q, useRoute as u };
 //# sourceMappingURL=server.mjs.map

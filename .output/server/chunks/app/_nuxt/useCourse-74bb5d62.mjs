@@ -1,6 +1,6 @@
 import { computed, unref, reactive, ref, shallowRef, toRef, getCurrentInstance, onServerPrefetch, nextTick, watch, getCurrentScope, onScopeDispose, readonly } from 'vue';
 import { l as useRequestHeaders, c as createError, j as fetchDefaults, i as asyncDataDefaults, k as useRequestFetch, h as useNuxtApp } from '../server.mjs';
-import { h as hash } from '../../nitro/node-server.mjs';
+import { F as hash } from '../../nitro/node-server.mjs';
 
 function useAsyncData(...args) {
   var _a2, _b, _c, _d, _e, _f, _g, _h;

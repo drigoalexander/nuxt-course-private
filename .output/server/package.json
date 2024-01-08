@@ -6,7 +6,7 @@
   "dependencies": {
     ".prisma": "0.0.0",
     "@babel/parser": "7.23.0",
-    "@prisma/client": "5.7.0",
+    "@prisma/client": "5.7.1",
     "@supabase/functions-js": "2.1.5",
     "@supabase/gotrue-js": "2.60.1",
     "@supabase/node-fetch": "2.6.15",

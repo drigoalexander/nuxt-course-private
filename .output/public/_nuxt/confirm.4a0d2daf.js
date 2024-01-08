@@ -1,0 +1,1 @@
+import{d as t,u as o,a as n,b as r,w as c,o as u,c as _,e as i,n as p,_ as m}from"./entry.cc832dd7.js";const g=t({__name:"confirm",setup(l){const{query:a}=o();n();const e=r();return c(e,()=>{e.value&&p(a.redirectTo,{replace:!0})},{immediate:!0}),(d,f)=>{const s=m;return u(),_("div",null,[i(s,{loginProcess:!0})])}}});export{g as default};

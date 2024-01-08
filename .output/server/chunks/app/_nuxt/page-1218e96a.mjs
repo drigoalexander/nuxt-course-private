@@ -1,6 +1,6 @@
 import { defineComponent, ref, inject, h, Suspense, nextTick, Transition, provide, shallowReactive } from 'vue';
 import { RouterView } from 'vue-router';
-import { e as defu } from '../../nitro/node-server.mjs';
+import { x as defu } from '../../nitro/node-server.mjs';
 import { P as PageRouteSymbol, L as LayoutMetaSymbol, f as appPageTransition, g as appKeepalive, h as useNuxtApp } from '../server.mjs';
 import 'node:http';
 import 'node:https';

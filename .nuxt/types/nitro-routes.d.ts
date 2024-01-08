@@ -12,8 +12,20 @@ declare module 'nitropack' {
     '/api/course/meta': {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/course/meta.get').default>>>>
     }
+    '/api/midtrans/paymentIntent': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/midtrans/paymentIntent').default>>>>
+    }
+    '/api/midtrans/webhook': {
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/midtrans/webhook.post').default>>>>
+    }
+    '/api/user/hasAccess': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/hasAccess').default>>>>
+    }
+    '/api/user/linkWithPurchase/:id': {
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/linkWithPurchase/[id]').default>>>>
+    }
     '/api/user/progress': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/progress').default>>>>
+      'post': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/api/user/progress.post').default>>>>
     }
     '/__nuxt_error': {
       'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../node_modules/nuxt/dist/core/runtime/nitro/renderer').default>>>>
