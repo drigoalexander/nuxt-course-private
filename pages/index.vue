@@ -5,10 +5,10 @@ const columns = ref(1);
 const rows = ref(1);
 const widthRec = ref(50);
 const heightRec = ref(50);
-const themes = ref(["#FCF84A", "#FE2857", "#AF1DF5", "#171717"]);
-let themeIdx = ref(0);
+const themes = ref(["#fffdfb", "#1c1a19"]);
+const colorMd = ref(["dark", "light"]);
+let backgroundColor = ref("");
 const colorMode = useColorMode();
-const colorTrigger = ref(null);
 
 useHead({
   script: [
@@ -31,13 +31,16 @@ onMounted(() => {
 
   window.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-      themeIdx.value++;
-      if (themeIdx.value === 4) {
-        themeIdx.value = 0;
+      colorMode.value = colorMode.value === "dark" ? "light" : "dark";
+
+      if (colorMode.value === "dark") {
+        backgroundColor.value = "#1c1a19";
+      } else if (colorMode.value === "light") {
+        backgroundColor.value = "#fffdfb";
       }
       $anime({
         targets: ".tiles",
-        backgroundColor: themes.value[themeIdx.value],
+        backgroundColor: backgroundColor.value,
         delay: $anime.stagger(30, {
           grid: [columns.value, rows.value],
           from: "center",
@@ -56,13 +59,16 @@ const ComputedRows = computed(() => {
 });
 
 function animate(idx) {
-  themeIdx.value++;
-  if (themeIdx.value === 4) {
-    themeIdx.value = 0;
+  colorMode.value = colorMode.value === "dark" ? "light" : "dark";
+
+  if (colorMode.value === "dark") {
+    backgroundColor.value = "#1c1a19";
+  } else if (colorMode.value === "light") {
+    backgroundColor.value = "#fffdfb";
   }
   $anime({
     targets: ".tiles",
-    backgroundColor: themes.value[themeIdx.value],
+    backgroundColor: backgroundColor.value,
     delay: $anime.stagger(30, {
       grid: [columns.value, rows.value],
       from: idx,
@@ -121,13 +127,11 @@ function animate(idx) {
             <div
               class="text-center sm:px-12 md:w-2/3 md:px-0 md:text-left lg:w-1/2"
             >
-              <h1
-                class="text-5xl font-black dark:text-white md:text-6xl xl:text-7xl"
-              >
+              <h1 class="text-5xl font-black md:text-6xl xl:text-7xl">
                 Becoming a Nuxt Ninja: Level Up Your Skills!
               </h1>
               <div class="">
-                <p class="mt-8 text-lg text-gray-700 dark:text-gray-100">
+                <p class="mt-8 text-lg">
                   Embark on an epic journey to unlock the full potential of
                   Nuxt, the ultimate SSR JavaScript framework based on Vue.
                   Discover the secrets, hone your skills, and become a true Nuxt
@@ -138,11 +142,15 @@ function animate(idx) {
                 >
                   <NuxtLink
                     @click="navigateTo('/course')"
-                    class="pointer-events-auto cursor-pointer before:bg-primary astro-Z4ZYBUMP"
-                    ><span class="text-white astro-Z4ZYBUMP">
-                      Get Started
-                    </span></NuxtLink
+                    class="z-50 cursor-pointer pointer-events-auto relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800"
                   >
+                    <span
+                      id="button"
+                      class="relative px-5 py-2.5 transition-all ease-in duration-300 hover:px-10 rounded-md"
+                    >
+                      Get started
+                    </span>
+                  </NuxtLink>
                 </div>
               </div>
             </div>
@@ -208,9 +216,7 @@ function animate(idx) {
     <div class="relative pt-32 md:pt-44" id="features">
       <div class="mx-auto max-w-6xl px-6 md:px-12 lg:px-6 xl:px-0">
         <div class="mx-auto md:w-3/5">
-          <h2
-            class="text-center text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl"
-          >
+          <h2 class="text-center text-3xl font-bold md:text-4xl lg:text-5xl">
             Shaped to meet big industry ready needs
           </h2>
           <p class="mt-4 text-center text-gray-600 dark:text-gray-300">
@@ -240,21 +246,26 @@ function animate(idx) {
               <div
                 class="relative flex h-full flex-col items-center justify-center gap-6 p-8 py-16 lg:py-8"
               >
-                <img
-                  class="w-16"
-                  src=""
-                  alt="xp icon illustration"
-                  width="512"
-                  height="512"
-                  loading="lazy"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-12 aspect-square"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21"
+                  />
+                </svg>
+
                 <div class="mx-auto text-center sm:w-2/5">
-                  <h2
-                    class="text-xl font-semibold text-gray-900 dark:text-white"
-                  >
+                  <h2 class="text-xl font-semibold">
                     Real case big industry project
                   </h2>
-                  <p class="mt-3 text-gray-600 dark:text-gray-400">
+                  <p class="mt-3">
                     Dolorem aliquid officiis quae ipsum nobis libero alias Iure
                     nobis dicta.
                   </p>
@@ -286,12 +297,10 @@ function animate(idx) {
                   </svg>
                 </div>
                 <div>
-                  <h2
-                    class="text-xl font-semibold text-gray-900 dark:text-white"
-                  >
+                  <h2 class="text-xl font-semibold dark:text-white">
                     Security first
                   </h2>
-                  <p class="mt-3 text-gray-600 dark:text-gray-400">
+                  <p class="mt-3 text-gray-600 dark:text-gray-200">
                     Dolorem aliquid officiis quae ipsum nobis libero alias Iure
                     nobis dicta.
                   </p>
@@ -325,7 +334,7 @@ function animate(idx) {
                   >
                     Payment Gateway
                   </h2>
-                  <p class="mt-3 text-gray-600 dark:text-gray-400">
+                  <p class="mt-3 text-gray-600 dark:text-gray-200">
                     Dolorem aliquid officiis quae ipsum nobis libero alias Iure
                     nobis dicta.
                   </p>
@@ -359,7 +368,7 @@ function animate(idx) {
                   >
                     Robust System
                   </h2>
-                  <p class="mt-3 text-gray-600 dark:text-gray-400">
+                  <p class="mt-3 text-gray-600 dark:text-gray-200">
                     Dolorem aliquid officiis quae ipsum nobis libero alias Iure
                     nobis dicta.
                   </p>
@@ -393,7 +402,7 @@ function animate(idx) {
                   >
                     Search engine
                   </h2>
-                  <p class="mt-3 text-gray-600 dark:text-gray-400">
+                  <p class="mt-3 text-gray-600 dark:text-gray-200">
                     Dolorem aliquid officiis quae ipsum nobis libero alias Iure
                     nobis dicta.
                   </p>
@@ -405,76 +414,23 @@ function animate(idx) {
       </div>
     </div>
     <div class="pt-32 md:pt-44" id="solution">
-      <div class="mx-auto max-w-6xl px-6 md:px-12 lg:px-6 xl:px-0">
+      <div class="mx-auto max-w-screen px-6 md:px-12 lg:px-6 xl:px-0">
         <div
-          class="flex-row-reverse items-center justify-between space-y-12 text-gray-600 md:flex md:gap-6 lg:gap-12 lg:space-y-0"
+          class="flex-row-reverse items-center justify-center space-y-12 md:flex md:gap-6 lg:gap-12 lg:space-y-0"
         >
-          <div class="relative ml-auto h-full md:w-1/2 chart test"></div>
-
-          <div class="md:w-1/2 lg:w-[47%]">
+          <div class="w-2/3 mx-auto">
             <h2
-              class="text-3xl font-bold text-gray-900 dark:text-white md:text-4xl lg:text-5xl"
+              class="text-3xl font-bold md:text-4xl lg:text-5xl leading-5 tracking-tighter text-center"
             >
               Just focus on your skills, we'll take care the curicullum
             </h2>
-            <p class="my-12 text-gray-600 dark:text-gray-300">
-              Nobis minus voluptatibus pariatur dignissimos libero quaerat iure
-              expedita at? Asperiores nemo possimus nesciunt dicta veniam
-              aspernatur quam mollitia. <br />
-              <br />
-              Vitae error, quaerat officia delectus voluptatibus explicabo quo
-              pariatur impedit, at reprehenderit aliquam a ipsum quas
-              voluptatem. Quo pariatur asperiores eum amet.
-            </p>
-            <div
-              class="space-y-4 divide-y divide-gray-100 dark:divide-gray-800"
+            <p
+              class="my-12 w-3/4 leading-6 tracking-wider mx-auto text-center flex items-center justify-center"
             >
-              <div class="mt-8 flex gap-4 md:items-center">
-                <div
-                  class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="m-auto h-6 w-6 text-gray-700 dark:text-gray-300"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"
-                    ></path>
-                  </svg>
-                </div>
-                <div class="w-5/6">
-                  <h3
-                    class="text-lg font-semibold text-gray-700 dark:text-white"
-                  >
-                    Chat Your Mentor
-                  </h3>
-                  <p class="text-gray-500 dark:text-gray-400">
-                    Asperiores nemo possimus nesciunt quam mollitia.
-                  </p>
-                </div>
-              </div>
-              <div class="flex gap-4 pt-4 md:items-center">
-                <div
-                  class="flex h-12 w-12 gap-4 rounded border border-gray-200 dark:border-gray-900"
-                ></div>
-                <div class="w-5/6">
-                  <h3
-                    class="text-lg font-semibold text-gray-700 dark:text-white"
-                  >
-                    Real Time Location
-                  </h3>
-                  <p class="text-gray-500 dark:text-gray-400">
-                    Asperiores nemo possimus nesciunt quam mollitia.
-                  </p>
-                </div>
-              </div>
-            </div>
+              Master Nuxt.js effortlessly as we take care of the curriculum
+              details. Our meticulously crafted content ensures a relevant and
+              focused learning experience, so you can excel in web development.
+            </p>
           </div>
         </div>
         <div class="mt-8 md:pt-32 lg:mt-20 xl:mt-16">
@@ -493,5 +449,30 @@ function animate(idx) {
   display: grid;
   grid-template-columns: repeat(v-bind(ComputedColumns), 1fr);
   grid-template-rows: repeat(v-bind(ComputedRows), 1fr);
+}
+</style>
+
+<style>
+.light-mode body {
+  color: #4b5563;
+}
+
+.dark-mode #modal {
+  background-color: #1f2937;
+  color: white;
+}
+
+.light-mode #modal {
+  background-color: #fffdfb;
+  color: #4b5563;
+}
+.dark-mode #button {
+  background-color: #1c1a19;
+  color: white;
+}
+
+.light-mode #button {
+  background-color: #fffdfb;
+  color: #4b5563;
 }
 </style>

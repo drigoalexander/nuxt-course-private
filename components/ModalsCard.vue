@@ -1,10 +1,11 @@
 <template>
   <div
+    id="modal"
     :class="{
       '-translate-y-[120%]': !modals,
       'translate-y-0': modals,
     }"
-    class="left-[1%] top-[1%] flex justify-between items-start ease-in-out duration-300 transition fixed rounded-lg w-auto p-4 bg-neutral-100 dark:bg-neutral-950 shadow-xl text-neutral-950 dark:text-neutral-200 z-50 pointer-events-auto bg-gray-800 gap-6"
+    class="left-[1%] top-[1%] flex justify-between items-start ease-in-out duration-300 transition fixed rounded-lg w-auto p-4 bg-neutral-100 dark:bg-neutral-950 shadow-xl text-neutral-950 dark:text-neutral-200 z-50 pointer-events-auto border-gray-200 border-[1px] gap-6"
   >
     <span class="text-sm capitalize">
       Hi, try clicking <span class="font-extrabold italic"> 'anywhere' </span>or
