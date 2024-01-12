@@ -20,7 +20,7 @@
         >
           <li class="flex gap-x-3">
             <svg
-              class="h-6 w-5 flex-none text-pink-500"
+              class="h-6 w-5 flex-none text-[#050708]"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -35,7 +35,7 @@
           </li>
           <li class="flex gap-x-3">
             <svg
-              class="h-6 w-5 flex-none text-pink-500"
+              class="h-6 w-5 flex-none text-[#050708]"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -50,7 +50,7 @@
           </li>
           <li class="flex gap-x-3">
             <svg
-              class="h-6 w-5 flex-none text-pink-500"
+              class="h-6 w-5 flex-none text-[#050708]"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"
@@ -65,7 +65,7 @@
           </li>
           <li class="flex gap-x-3">
             <svg
-              class="h-6 w-5 flex-none text-pink-500"
+              class="h-6 w-5 flex-none text-[#050708]"
               viewBox="0 0 20 20"
               fill="currentColor"
               aria-hidden="true"

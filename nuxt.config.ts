@@ -22,6 +22,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@nuxtjs/color-mode",
     "@pinia/nuxt",
+    "nuxt-viewport",
     "@nuxtjs/google-fonts",
   ],
   build: {

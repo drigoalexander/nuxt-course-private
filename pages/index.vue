@@ -1,4 +1,6 @@
 <script setup>
+import { useNuxtApp } from "#app";
+const { $viewport } = useNuxtApp();
 const { $anime } = useNuxtApp();
 const config = useRuntimeConfig();
 const columns = ref(1);
@@ -127,15 +129,16 @@ function animate(idx) {
             <div
               class="text-center sm:px-12 md:w-2/3 md:px-0 md:text-left lg:w-1/2"
             >
-              <h1 class="text-5xl font-black md:text-6xl xl:text-7xl">
+              <h1
+                class="text-4xl leading-normal font-black md:text-6xl xl:text-7xl"
+              >
                 Becoming a Nuxt Ninja: Level Up Your Skills!
               </h1>
               <div class="">
-                <p class="mt-8 text-lg">
-                  Embark on an epic journey to unlock the full potential of
-                  Nuxt, the ultimate SSR JavaScript framework based on Vue.
-                  Discover the secrets, hone your skills, and become a true Nuxt
-                  master with our expert guidance.
+                <p class="mt-8 text-sm md:text-lg">
+                  Embark on an epic journey to master Nuxt, the ultimate SSR
+                  JavaScript framework based on Vue, with expert guidance to
+                  unlock its full potential.
                 </p>
                 <div
                   class="mt-12 flex justify-center gap-4 sm:gap-6 md:justify-start"
@@ -154,61 +157,10 @@ function animate(idx) {
                 </div>
               </div>
             </div>
-            <AnimatedNuxtLogo class="right-1/2 translate-x-3/4 scale-90" />
-          </div>
-
-          <div class="mt-8 text-center md:mt-32 lg:mt-20 xl:mt-16">
-            <span
-              class="text-sm font-semibold tracking-wider text-gray-800 dark:text-white"
-              >TRUSTED BY YOUR FAVORED TOP TECHS COMPANIES</span
-            >
-            <div
-              class="mt-8 flex flex-wrap items-center justify-center gap-6 brightness-75 contrast-200 grayscale dark:brightness-200 dark:contrast-0 sm:justify-between lg:gap-24"
-            >
-              <img
-                class="h-8 w-auto lg:h-14"
-                src="https://play-lh.googleusercontent.com/pHXtOQQ__TBgp_c9FgfBOCp4cXL9oU5tVAe318JDvcQP266UCO7U_VyO6lUzo8ZWPWJ_=w240-h480-rw"
-                srcset="
-                  https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Trade_Republic_logo_2021.svg/1200px-Trade_Republic_logo_2021.svg.png
-                "
-                loading="lazy"
-                alt="airbnb"
-                width="100"
-                height=""
-              />
-              <img
-                class="h-6 w-auto lg:h-10"
-                src="https://upload.wikimedia.org/wikipedia/commons/9/92/On-cloud-logo-white-background.svg"
-                loading="lazy"
-                alt="bissell"
-                width="100"
-                height=""
-              />
-              <img
-                class="h-6 w-auto lg:h-10"
-                src="https://docs.vuejs.id/images/vueschool.png"
-                loading="lazy"
-                alt="ge"
-                width="100"
-                height="100"
-              />
-              <img
-                class="h-6 w-auto lg:h-10"
-                src="https://www.pngall.com/wp-content/uploads/13/TikTok-Logo-PNG-Image-HD.png"
-                loading="lazy"
-                alt="lilly"
-                width="100"
-                height="100"
-              />
-              <img
-                class="h-8 w-auto lg:h-14"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/OpenAI_Logo.svg/1024px-OpenAI_Logo.svg.png"
-                loading="lazy"
-                alt="microsoft"
-                width="100"
-                height=""
-              />
-            </div>
+            <AnimatedNuxtLogo
+              v-if="$viewport.isGreaterOrEquals('tablet')"
+              class="right-1/2 translate-x-3/4 scale-90"
+            />
           </div>
         </div>
       </div>
@@ -418,14 +370,14 @@ function animate(idx) {
         <div
           class="flex-row-reverse items-center justify-center space-y-12 md:flex md:gap-6 lg:gap-12 lg:space-y-0"
         >
-          <div class="w-2/3 mx-auto">
+          <div class="md:w-2/3 mx-auto">
             <h2
-              class="text-3xl font-bold md:text-4xl lg:text-5xl leading-5 tracking-tighter text-center"
+              class="text-3xl font-bold md:text-4xl lg:text-5xl tracking-tighter text-center"
             >
               Just focus on your skills, we'll take care the curicullum
             </h2>
             <p
-              class="my-12 w-3/4 leading-6 tracking-wider mx-auto text-center flex items-center justify-center"
+              class="my-12 md:w-3/4 leading-6 tracking-wider mx-auto text-center flex items-center justify-center"
             >
               Master Nuxt.js effortlessly as we take care of the curriculum
               details. Our meticulously crafted content ensures a relevant and
